@@ -1,6 +1,7 @@
-import path from 'node:path';
-import { IGenerator, ScaffoldingOptions } from '../core/generator.interface';
-import { FileUtils } from '../utils/file.utils';
+import path from 'node:path'
+
+import { type IGenerator, type ScaffoldingOptions } from '../core/generator.contracts'
+import { FileUtils } from '../utils/file.utils'
 
 /**
  * @class DrizzleSqlLiteGenerator
@@ -10,17 +11,17 @@ import { FileUtils } from '../utils/file.utils';
  */
 export class DrizzleSqlLiteGenerator implements IGenerator {
   shouldGenerate(options: ScaffoldingOptions): boolean {
-    return !options.database && options.sqlLite;
+    return !options.database && options.sqlLite
   }
 
   async generate(projectPath: string, _options: ScaffoldingOptions): Promise<void> {
-    const configContent = this.composeDrizzleConfig();
-    const filePath = path.join(projectPath, 'drizzle.config.ts');
-    await FileUtils.writeFileRecursive(filePath, configContent);
+    const configContent = this.composeDrizzleConfig()
+    const filePath = path.join(projectPath, 'drizzle.config.ts')
+    await FileUtils.writeFileRecursive(filePath, configContent)
 
-    const schemaPath = path.join(projectPath, 'src', 'infrastructure', 'db', 'sqlite-schema.ts');
-    const schemaContent = this.composeSchema();
-    await FileUtils.writeFileRecursive(schemaPath, schemaContent);
+    const schemaPath = path.join(projectPath, 'src', 'infrastructure', 'db', 'sqlite-schema.ts')
+    const schemaContent = this.composeSchema()
+    await FileUtils.writeFileRecursive(schemaPath, schemaContent)
   }
 
   private composeDrizzleConfig(): string {
@@ -41,7 +42,7 @@ export default defineConfig({
   verbose: true,
   strict: true,
 });
-`;
+`
   }
 
   private composeSchema(): string {
@@ -61,6 +62,6 @@ export const tenantsTable = sqliteTable('tenants', {
 export type SqliteSchema = {
   tenants: typeof tenantsTable;
 };
-`;
+`
   }
 }

@@ -7,7 +7,23 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsx src/index.ts"
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint --config eslint.config.mjs \"src/**/*.ts\" --max-warnings=0",
+    "lint:fix": "eslint --config eslint.config.mjs \"src/**/*.ts\" --fix --max-warnings=0",
+    "lint-staged": "lint-staged",
+    "commitlint": "commitlint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "check": "npm run typecheck && npm run lint:fix && npm run test",
+    "verify:commit": "npm run lint-staged && npm run test",
+    "verify:push": "npm run check",
+    "prepare": "husky",
+    "prepublishOnly": "npm run check && npm run build",
+    "release": "npm run prepublishOnly && npm publish"
   },
   "keywords": [],
   "author": "Xeno",
@@ -24,6 +40,18 @@
     "@types/node": "^26.0.0",
     "@types/prompts": "^2.4.9",
     "tsx": "^4.22.4",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^4.1.7",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
+    "prettier": "^3.8.3",
+    "typescript-eslint": "^8.60.0",
+    "vitest": "^4.1.7"
   }
 }

@@ -1,30 +1,31 @@
-import path from 'node:path';
-import { IGenerator, ScaffoldingOptions } from '../core/generator.interface';
-import { FileUtils } from '../utils/file.utils';
+import path from 'node:path'
+
+import { type IGenerator, type ScaffoldingOptions } from '../core/generator.contracts'
+import { FileUtils } from '../utils/file.utils'
 
 /**
  * @class DrizzleGenerator
  * @description Generates the Drizzle configuration file (drizzle.config.ts) and a basic schema file (src/schema.ts) for database scaffolding.
  * The generator is only invoked if the user has opted to include database support in their project.
- * 
+ *
  * @author Xeno
  * @version 1.0.0
  * @license ISC
  * @since 2025-09-30
- * @link https://github.com/Mattia-Carcione/xeno-js 
+ * @link https://github.com/Mattia-Carcione/xeno-js
  */
 export class DrizzleGenerator implements IGenerator {
   shouldGenerate(options: ScaffoldingOptions): boolean {
-    return options.database && !options.sqlLite;
+    return options.database && !options.sqlLite
   }
 
-  async generate(projectPath: string, options: ScaffoldingOptions): Promise<void> {
-    const configContent = this.composeDrizzleConfig();
-    const filePath = path.join(projectPath, 'drizzle.config.ts');
-    await FileUtils.writeFileRecursive(filePath, configContent);
+  async generate(projectPath: string, _options: ScaffoldingOptions): Promise<void> {
+    const configContent = this.composeDrizzleConfig()
+    const filePath = path.join(projectPath, 'drizzle.config.ts')
+    await FileUtils.writeFileRecursive(filePath, configContent)
 
-    const schemaContent = this.composeSchema();
-    await FileUtils.writeFileRecursive(path.join(projectPath, 'src', 'schema.ts'), schemaContent);
+    const schemaContent = this.composeSchema()
+    await FileUtils.writeFileRecursive(path.join(projectPath, 'src', 'schema.ts'), schemaContent)
   }
 
   private composeDrizzleConfig(): string {
@@ -45,7 +46,7 @@ export default defineConfig({
   verbose: true,
   strict: true,
 });
-`;
+`
   }
 
   private composeSchema(): string {
@@ -72,6 +73,6 @@ export default defineConfig({
  */
 //export type UserDto = typeof usersTable.$inferSelect;
 //export type NewUserDto = typeof usersTable.$inferInsert;
-`;
+`
   }
 }

@@ -13,23 +13,23 @@
 /**
  * Represents the options selected by the user during the scaffolding process.
  * These options determine which generators should be executed and what content they should produce.
- * 
+ *
  * @author Xeno
  * @version 1.0.0
  * @license ISC
  * @since 2025-09-30
- * @link https://github.com/Mattia-Carcione/xeno-js 
+ * @link https://github.com/Mattia-Carcione/xeno-js
  */
 export interface ScaffoldingOptions {
-  targetDir: string;
-  zod: boolean;
-  database: boolean;
-  sqlLite: boolean;
-  http: boolean;
-  supabase: boolean;
-  logging: boolean;
-  sentry: boolean;
-  redis: boolean;
+  targetDir: string
+  zod: boolean
+  database: boolean
+  sqlLite: boolean
+  http: boolean
+  supabase: boolean
+  logging: boolean
+  sentry: boolean
+  redis: boolean
 }
 
 /**
@@ -44,26 +44,26 @@ export interface ScaffoldingOptions {
 export interface IGenerator {
   /**
    * Determines if this generator should be executed based on the user-selected options.
- * 
- * @author Xeno
- * @version 1.0.0
- * @license ISC
- * @since 2025-09-30
- * @link https://github.com/Mattia-Carcione/xeno-js 
- */
-  shouldGenerate(options: ScaffoldingOptions): boolean;
+   *
+   * @author Xeno
+   * @version 1.0.0
+   * @license ISC
+   * @since 2025-09-30
+   * @link https://github.com/Mattia-Carcione/xeno-js
+   */
+  shouldGenerate(options: ScaffoldingOptions): boolean
 
   /**
    * Executes the generation logic.
    * Writes files, updates configurations, or prepares templates.
    * @param projectPath - The absolute path of the target directory
    * @param options - The user-selected options
-   * 
+   *
    * @author Xeno
    * @version 1.0.0
    * @license ISC
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/Mattia-Carcione/xeno-js
    */
-  generate(projectPath: string, options: ScaffoldingOptions): Promise<void>;
+  generate(projectPath: string, options: ScaffoldingOptions): Promise<void>
 }

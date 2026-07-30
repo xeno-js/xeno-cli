@@ -1,26 +1,27 @@
-import path from 'node:path';
-import { IGenerator, ScaffoldingOptions } from '../core/generator.interface';
-import { FileUtils } from '../utils/file.utils';
+import path from 'node:path'
+
+import { type IGenerator, type ScaffoldingOptions } from '../core/generator.contracts'
+import { FileUtils } from '../utils/file.utils'
 
 /**
  * @class ReadmeGenerator
  * @description This generator creates a README.md file for the project.
- * 
+ *
  * @author Xeno
  * @version 1.0.0
  * @license ISC
  * @since 2025-09-30
- * @link https://github.com/Mattia-Carcione/xeno-js 
+ * @link https://github.com/Mattia-Carcione/xeno-js
  */
 export class ReadmeGenerator implements IGenerator {
   shouldGenerate(): boolean {
-    return true;
+    return true
   }
 
   async generate(projectPath: string, options: ScaffoldingOptions): Promise<void> {
-    const content = this.composeReadme(options);
-    const filePath = path.join(projectPath, 'README.md');
-    await FileUtils.writeFileRecursive(filePath, content);
+    const content = this.composeReadme(options)
+    const filePath = path.join(projectPath, 'README.md')
+    await FileUtils.writeFileRecursive(filePath, content)
   }
 
   private composeReadme(options: ScaffoldingOptions): string {
@@ -50,6 +51,6 @@ ${options.database ? '- **Persistence:** Drizzle ORM integrated.' : ''}
 
 ## 📄 License
 Licensed under the ISC License.
-`;
+`
   }
 }
