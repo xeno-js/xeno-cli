@@ -25,7 +25,7 @@ export class MainGenerator implements IGenerator {
   }
 
   private composeMain(): string {
-    return `import { bootstrap } from './bootstrap.js';
+    return `import 'dotenv/config'\nimport { bootstrap } from './bootstrap.js';
 
 /**
  * Main application entry point.

@@ -25,7 +25,7 @@ export class RegistryGenerator implements IGenerator {
   }
 
   private composeRegistryContent(): string {
-    return `import { XenoRegistry } from '@xeno/core';
+    return `import type { XenoRegistry } from '@xeno-js/core';
     
 /**
  * @file registry.ts

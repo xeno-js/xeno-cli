@@ -28,6 +28,8 @@ export class TsconfigGenerator implements IGenerator {
         esModuleInterop: true,
         skipLibCheck: true,
         forceConsistentCasingInFileNames: true,
+        outDir: './dist',
+        rootDir: './src',
         types: ['node'],
       },
       include: this.getIncludeFiles(options),

@@ -22,8 +22,9 @@ export class PackageJsonGenerator implements IGenerator {
     const packageJson = {
       name: options.targetDir,
       version: '1.0.0',
-      private: true,
+      main: './dist/index.js',
       type: 'module',
+      files: ['dist'],
       scripts: this.getScripts(options),
       dependencies: this.getDependencies(options),
       devDependencies: this.getDevDependencies(options),
@@ -35,7 +36,8 @@ export class PackageJsonGenerator implements IGenerator {
 
   private getDependencies(options: ScaffoldingOptions): Record<string, string> {
     const deps: Record<string, string> = {
-      '@xeno/core': 'latest',
+      '@xeno-js/core': 'latest',
+      '@xeno-js/shared': 'latest',
       'dotenv': '^16.4.5',
     }
 
@@ -101,6 +103,7 @@ export class PackageJsonGenerator implements IGenerator {
     const scripts: Record<string, string> = {
       start: 'tsx src/main.ts',
       dev: 'tsx watch src/main.ts',
+      build: 'tsc --project tsconfig.json',
       g: 'xeno generate', // Alias for scaffolding - actually, this is a placeholder for the scaffolding command
     }
 

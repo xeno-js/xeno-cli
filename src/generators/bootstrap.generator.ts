@@ -31,8 +31,10 @@ export class BootstrapGenerator implements IGenerator {
 
   private composeBootstrap(options: ScaffoldingOptions): string {
     const imports = [
-      "import { AppBuilder } from '@xeno/core';\nimport { MyRegistry } from './registry';",
-      options.logging ? "import { LOG_LEVEL } from '@xeno/core';" : '',
+      options.logging
+        ? "import { AppBuilder, LOG_LEVEL. TOKENS } from '@xeno-js/core';\n"
+        : "import { AppBuilder, TOKENS } from '@xeno - js / core';\n",
+      "import { MyRegistry } from './registry';",
     ]
       .filter(Boolean)
       .join('\n')
