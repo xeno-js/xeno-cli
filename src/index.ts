@@ -11,7 +11,7 @@ import {
   EnvGenerator,
   GitIgnoreGenerator,
   MainGenerator,
-  PackageJsonGenerator,
+  // PackageJsonGenerator,
   ReadmeGenerator,
   RegistryGenerator,
   TsconfigGenerator,
@@ -85,7 +85,7 @@ async function init() {
   }
 
   const engine = new ScaffoldingEngine([
-    new PackageJsonGenerator(),
+    // new PackageJsonGenerator(),
     new TsconfigGenerator(),
     new GitIgnoreGenerator(),
     new EnvGenerator(),
