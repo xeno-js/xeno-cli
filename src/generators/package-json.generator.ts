@@ -1,6 +1,8 @@
 import path from 'node:path'
 
-import { type IGenerator, type ScaffoldingOptions } from '../core/generator.contracts'
+import { type IGenerator } from '@/domain'
+import { type CoreOptions } from '@/shared'
+
 import { FileUtils } from '../utils/file.utils'
 
 /**
@@ -13,12 +15,8 @@ import { FileUtils } from '../utils/file.utils'
  * @since 2025-09-30
  * @link https://github.com/Mattia-Carcione/xeno-js
  */
-export class PackageJsonGenerator implements IGenerator {
-  shouldGenerate(_options: ScaffoldingOptions): boolean {
-    return true
-  }
-
-  async generate(projectPath: string, options: ScaffoldingOptions): Promise<void> {
+export class PackageJsonGenerator implements IGenerator<CoreOptions> {
+  async generate(projectPath: string, options: CoreOptions): Promise<void> {
     const packageJson = {
       name: options.targetDir,
       version: '1.0.0',
@@ -34,7 +32,7 @@ export class PackageJsonGenerator implements IGenerator {
     await FileUtils.writeFileRecursive(filePath, JSON.stringify(packageJson, null, 2))
   }
 
-  private getDependencies(options: ScaffoldingOptions): Record<string, string> {
+  private getDependencies(options: CoreOptions): Record<string, string> {
     const deps: Record<string, string> = {
       '@xeno-js/core': 'latest',
       '@xeno-js/shared': 'latest',
@@ -79,7 +77,7 @@ export class PackageJsonGenerator implements IGenerator {
     return deps
   }
 
-  private getDevDependencies(options: ScaffoldingOptions): Record<string, string> {
+  private getDevDependencies(options: CoreOptions): Record<string, string> {
     const devDeps: Record<string, string> = {
       '@xeno/cli': 'latest',
       'tsx': '^4.7.0',
@@ -99,7 +97,7 @@ export class PackageJsonGenerator implements IGenerator {
     return devDeps
   }
 
-  private getScripts(options: ScaffoldingOptions): Record<string, string> {
+  private getScripts(options: CoreOptions): Record<string, string> {
     const scripts: Record<string, string> = {
       start: 'tsx src/main.ts',
       dev: 'tsx watch src/main.ts',

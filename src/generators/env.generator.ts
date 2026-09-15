@@ -1,6 +1,6 @@
 import path from 'node:path'
 
-import { type IGenerator, type ScaffoldingOptions } from '../core/generator.contracts'
+import { type IGenerator, type ScaffoldingOptions } from '../domain/generator.contracts'
 import { FileUtils } from '../utils/file.utils'
 
 /**

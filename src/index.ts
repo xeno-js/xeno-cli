@@ -2,8 +2,8 @@
 import pc from 'picocolors'
 import prompts from 'prompts'
 
-import { type ScaffoldingOptions } from './core/generator.contracts'
-import { ScaffoldingEngine } from './core/scaffolding.engine'
+import { type ScaffoldingOptions } from './domain/generator.contracts'
+import { ScaffoldingEngine } from './domain/scaffolding.engine'
 import {
   BootstrapGenerator,
   DrizzleGenerator,
