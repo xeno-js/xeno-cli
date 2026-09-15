@@ -1,60 +1,60 @@
-import path from 'node:path'
+// import path from 'node:path'
 
-import { type IGenerator, type ScaffoldingOptions } from '../domain/generator.contracts'
-import { FileUtils } from '../utils/file.utils'
+// import { type IGenerator, type ScaffoldingOptions } from '../domain/generator.contracts'
+// import { FileUtils } from '../shared/utils/file.utils'
 
-/**
- * @class GitIgnoreGenerator
- * @description This generator creates a .gitignore file for the project.
- *
- * @author Xeno
- * @version 1.0.0
- * @license ISC
- * @since 2025-09-30
- * @link https://github.com/Mattia-Carcione/xeno-js
- */
-export class GitIgnoreGenerator implements IGenerator {
-  shouldGenerate(): boolean {
-    return true // Ogni progetto deve avere un .gitignore
-  }
+// /**
+//  * @class GitIgnoreGenerator
+//  * @description This generator creates a .gitignore file for the project.
+//  *
+//  * @author Xeno
+//  * @version 1.0.0
+//  * @license ISC
+//  * @since 2025-09-30
+//  * @link https://github.com/Mattia-Carcione/xeno-js
+//  */
+// export class GitIgnoreGenerator implements IGenerator {
+//   shouldGenerate(): boolean {
+//     return true // Ogni progetto deve avere un .gitignore
+//   }
 
-  async generate(projectPath: string, _options: ScaffoldingOptions): Promise<void> {
-    const content = this.composeGitIgnore()
-    await FileUtils.writeFileRecursive(path.join(projectPath, '.gitignore'), content)
-  }
+//   async generate(projectPath: string, _options: ScaffoldingOptions): Promise<void> {
+//     const content = this.composeGitIgnore()
+//     await FileUtils.writeFileRecursive(path.join(projectPath, '.gitignore'), content)
+//   }
 
-  private composeGitIgnore(): string {
-    return `# Dependencies
-node_modules/
+//   private composeGitIgnore(): string {
+//     return `# Dependencies
+// node_modules/
 
-# Build artifacts
-dist/
-out/
-build/
+// # Build artifacts
+// dist/
+// out/
+// build/
 
-# Environment variables
-# We ignore actual .env files for security, but keep .env.example for documentation
-.env
-.env.local
-.env.*
-!.env.example
+// # Environment variables
+// # We ignore actual .env files for security, but keep .env.example for documentation
+// .env
+// .env.local
+// .env.*
+// !.env.example
 
-# Logs
-*.log
-logs/
+// # Logs
+// *.log
+// logs/
 
-# Test coverage
-coverage/
-.nyc_output/
+// # Test coverage
+// coverage/
+// .nyc_output/
 
-# OS and IDE
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
+// # OS and IDE
+// .DS_Store
+// Thumbs.db
+// .vscode/
+// .idea/
 
-# Drizzle (optional: keep migrations in version control)
-# drizzle/
-`
-  }
-}
+// # Drizzle (optional: keep migrations in version control)
+// # drizzle/
+// `
+//   }
+// }

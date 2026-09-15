@@ -1,113 +1,113 @@
-#!/usr/bin/env node
-import pc from 'picocolors'
-import prompts from 'prompts'
+// #!/usr/bin/env node
+// import pc from 'picocolors'
+// import prompts from 'prompts'
 
-import { type ScaffoldingOptions } from './domain/generator.contracts'
-import { ScaffoldingEngine } from './domain/scaffolding.engine'
-import {
-  BootstrapGenerator,
-  DrizzleGenerator,
-  DrizzleSqlLiteGenerator,
-  EnvGenerator,
-  GitIgnoreGenerator,
-  MainGenerator,
-  // PackageJsonGenerator,
-  ReadmeGenerator,
-  RegistryGenerator,
-  TsconfigGenerator,
-} from './generators/index'
-import { CommandUtils } from './utils/command.utils'
+// import { type ScaffoldingOptions } from './domain/generator.contracts'
+// import { ScaffoldingEngine } from './domain/scaffolding.engine'
+// import {
+//   BootstrapGenerator,
+//   DrizzleGenerator,
+//   DrizzleSqlLiteGenerator,
+//   EnvGenerator,
+//   GitIgnoreGenerator,
+//   MainGenerator,
+//   // PackageJsonGenerator,
+//   ReadmeGenerator,
+//   RegistryGenerator,
+//   TsconfigGenerator,
+// } from './generators/index'
+// import { CommandUtils } from './infrastructure/command_launcher/command.utils'
 
-/**
- * @function init
- * @description Initializes the scaffolding process for a new Xeno project.
- *
- * @author Xeno
- * @version 1.0.0
- * @license ISC
- * @since 2025-09-30
- * @link https://github.com/Mattia-Carcione/xeno-js
- */
-async function init() {
-  console.info(pc.cyan('\n🚀 Welcome to @xeno/core Scaffolding!'))
+// /**
+//  * @function init
+//  * @description Initializes the scaffolding process for a new Xeno project.
+//  *
+//  * @author Xeno
+//  * @version 1.0.0
+//  * @license ISC
+//  * @since 2025-09-30
+//  * @link https://github.com/Mattia-Carcione/xeno-js
+//  */
+// async function init() {
+//   console.info(pc.cyan('\n🚀 Welcome to @xeno/core Scaffolding!'))
 
-  const args = process.argv.slice(2)
-  const targetDir = args[0] ?? 'my-xeno-app'
-  const flags = args.slice(1)
+//   const args = process.argv.slice(2)
+//   const targetDir = args[0] ?? 'my-xeno-app'
+//   const flags = args.slice(1)
 
-  const isFull = flags.includes('--full')
-  const isEmpty = flags.includes('--empty')
+//   const isFull = flags.includes('--full')
+//   const isEmpty = flags.includes('--empty')
 
-  let options: ScaffoldingOptions = {
-    targetDir,
-    zod: isFull,
-    database: isFull,
-    sqlLite: false,
-    http: isFull,
-    supabase: isFull,
-    logging: isFull,
-    sentry: isFull,
-    redis: isFull,
-  }
+//   let options: ScaffoldingOptions = {
+//     targetDir,
+//     zod: isFull,
+//     database: isFull,
+//     sqlLite: false,
+//     http: isFull,
+//     supabase: isFull,
+//     logging: isFull,
+//     sentry: isFull,
+//     redis: isFull,
+//   }
 
-  if (!isFull && !isEmpty) {
-    const response = (await prompts([
-      { type: 'confirm', name: 'zod', message: 'Install Zod for validation?', initial: true },
-      {
-        type: 'confirm',
-        name: 'database',
-        message: 'Install Drizzle ORM & Postgres?',
-        initial: true,
-      },
-      { type: 'confirm', name: 'sqlLite', message: 'Install SQLite?', initial: false },
-      { type: 'confirm', name: 'http', message: 'Install Axios & Cockatiel?', initial: true },
-      { type: 'confirm', name: 'supabase', message: 'Install Supabase?', initial: true },
-      { type: 'confirm', name: 'logging', message: 'Install Pino?', initial: true },
-      { type: 'confirm', name: 'sentry', message: 'Install Sentry?', initial: false },
-      { type: 'confirm', name: 'redis', message: 'Install ioredis?', initial: false },
-    ])) as ScaffoldingOptions
+//   if (!isFull && !isEmpty) {
+//     const response = (await prompts([
+//       { type: 'confirm', name: 'zod', message: 'Install Zod for validation?', initial: true },
+//       {
+//         type: 'confirm',
+//         name: 'database',
+//         message: 'Install Drizzle ORM & Postgres?',
+//         initial: true,
+//       },
+//       { type: 'confirm', name: 'sqlLite', message: 'Install SQLite?', initial: false },
+//       { type: 'confirm', name: 'http', message: 'Install Axios & Cockatiel?', initial: true },
+//       { type: 'confirm', name: 'supabase', message: 'Install Supabase?', initial: true },
+//       { type: 'confirm', name: 'logging', message: 'Install Pino?', initial: true },
+//       { type: 'confirm', name: 'sentry', message: 'Install Sentry?', initial: false },
+//       { type: 'confirm', name: 'redis', message: 'Install ioredis?', initial: false },
+//     ])) as ScaffoldingOptions
 
-    if (response.database && response.sqlLite) {
-      console.error(
-        pc.red('❌ You cannot select both Drizzle ORM & Postgres and SQLite at the same time.'),
-      )
-      process.exit(1)
-    }
+//     if (response.database && response.sqlLite) {
+//       console.error(
+//         pc.red('❌ You cannot select both Drizzle ORM & Postgres and SQLite at the same time.'),
+//       )
+//       process.exit(1)
+//     }
 
-    if (Object.keys(response).length === 0) {
-      console.error(pc.red('❌ Scaffolding cancelled.'))
-      process.exit(1)
-    }
-    options = { ...options, ...response }
-  } else {
-    const mode = isFull ? 'FULL' : 'EMPTY'
-    console.info(pc.cyan(`📦 ${mode} mode selected.`))
-  }
+//     if (Object.keys(response).length === 0) {
+//       console.error(pc.red('❌ Scaffolding cancelled.'))
+//       process.exit(1)
+//     }
+//     options = { ...options, ...response }
+//   } else {
+//     const mode = isFull ? 'FULL' : 'EMPTY'
+//     console.info(pc.cyan(`📦 ${mode} mode selected.`))
+//   }
 
-  const engine = new ScaffoldingEngine([
-    // new PackageJsonGenerator(),
-    new TsconfigGenerator(),
-    new GitIgnoreGenerator(),
-    new EnvGenerator(),
-    new RegistryGenerator(),
-    new DrizzleGenerator(),
-    new DrizzleSqlLiteGenerator(),
-    new BootstrapGenerator(),
-    new MainGenerator(),
-    new ReadmeGenerator(),
-  ])
+//   const engine = new ScaffoldingEngine([
+//     // new PackageJsonGenerator(),
+//     new TsconfigGenerator(),
+//     new GitIgnoreGenerator(),
+//     new EnvGenerator(),
+//     new RegistryGenerator(),
+//     new DrizzleGenerator(),
+//     new DrizzleSqlLiteGenerator(),
+//     new BootstrapGenerator(),
+//     new MainGenerator(),
+//     new ReadmeGenerator(),
+//   ])
 
-  try {
-    await engine.run(targetDir, options)
+//   try {
+//     await engine.run(targetDir, options)
 
-    console.info(pc.cyan('\n📦 Installing dependencies...'))
-    await CommandUtils.runCommand('npm', ['install'], targetDir)
-    console.info(pc.green('\n✅ Scaffolding completed successfully!'))
-    console.info(pc.white(`\nNext steps:\n  cd ${targetDir}\n  npm run dev\n`))
-  } catch (error) {
-    console.error(pc.red('\n❌ Scaffolding failed.'), error)
-    process.exit(1)
-  }
-}
+//     console.info(pc.cyan('\n📦 Installing dependencies...'))
+//     await CommandUtils.runCommand('npm', ['install'], targetDir)
+//     console.info(pc.green('\n✅ Scaffolding completed successfully!'))
+//     console.info(pc.white(`\nNext steps:\n  cd ${targetDir}\n  npm run dev\n`))
+//   } catch (error) {
+//     console.error(pc.red('\n❌ Scaffolding failed.'), error)
+//     process.exit(1)
+//   }
+// }
 
-init().catch(console.error)
+// init().catch(console.error)
