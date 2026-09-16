@@ -1,7 +1,7 @@
 import path from 'node:path'
 
-import { type IGenerator, type ScaffoldingOptions } from '../domain/generator.contracts'
-import { FileUtils } from '../utils/file.utils'
+import type { IFileService, IGenerator } from '../../domain'
+import { type CoreOptions } from '../../shared'
 
 /**
  * @class DrizzleSqlLiteGenerator
@@ -9,19 +9,17 @@ import { FileUtils } from '../utils/file.utils'
  * SQLite schema example (src/infrastructure/db/sqlite-schema.ts) when the user
  * opts to use SQLite/libSQL instead of Postgres.
  */
-export class DrizzleSqlLiteGenerator implements IGenerator {
-  shouldGenerate(options: ScaffoldingOptions): boolean {
-    return !options.database && options.sqlLite
-  }
+export class DrizzleSqlLiteGenerator implements IGenerator<CoreOptions> {
+  constructor(private readonly _fileService: IFileService) {}
 
-  async generate(projectPath: string, _options: ScaffoldingOptions): Promise<void> {
+  async generate(projectPath: string, _options: CoreOptions): Promise<void> {
     const configContent = this.composeDrizzleConfig()
     const filePath = path.join(projectPath, 'drizzle.config.ts')
-    await FileUtils.writeFileRecursive(filePath, configContent)
+    await this._fileService.writeFileRecursive(filePath, configContent)
 
-    const schemaPath = path.join(projectPath, 'src', 'infrastructure', 'db', 'sqlite-schema.ts')
+    const schemaPath = path.join(projectPath, 'src', 'schema.ts')
     const schemaContent = this.composeSchema()
-    await FileUtils.writeFileRecursive(schemaPath, schemaContent)
+    await this._fileService.writeFileRecursive(schemaPath, schemaContent)
   }
 
   private composeDrizzleConfig(): string {
@@ -33,7 +31,7 @@ import { defineConfig } from 'drizzle-kit';
  * Uses environment variable SQLITE_DATABASE_URL to locate the database.
  */
 export default defineConfig({
-  schema: './src/infrastructure/db/sqlite-schema.ts',
+  schema: './src/schema.ts',
   out: './drizzle',
   dialect: 'sqlite',
   dbCredentials: {
@@ -46,7 +44,7 @@ export default defineConfig({
   }
 
   private composeSchema(): string {
-    return `import { sqliteTable, integer, text } from 'drizzle-orm/libsql';
+    return `import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
 
 /**
  * Example SQLite schema using Drizzle's libsql primitives.
@@ -59,8 +57,19 @@ export const tenantsTable = sqliteTable('tenants', {
   description: text('description'),
 });
 
+/**
+ * Types inferred from the schema.
+ * - UserDto: Represents the shape of the data retrieved from the database ($inferSelect).
+ * - NewUserDto: Represents the shape of the data required to insert a new record ($inferInsert).
+ */
+export type UserDto = typeof usersTable.$inferSelect;
+export type NewUserDto = typeof usersTable.$inferInsert;
+
+/**
+ * Centralized Database Schema dictionary.
+ */
 export type SqliteSchema = {
-  tenants: typeof tenantsTable;
+  users: typeof usersTable;
 };
 `
   }

@@ -1,7 +1,7 @@
 import path from 'node:path'
 
-import { type IGenerator, type ScaffoldingOptions } from '../domain/generator.contracts'
-import { FileUtils } from '../utils/file.utils'
+import type { IFileService, IGenerator } from '../../domain'
+import { type CoreOptions } from '../../shared'
 
 /**
  * @class DrizzleGenerator
@@ -14,18 +14,19 @@ import { FileUtils } from '../utils/file.utils'
  * @since 2025-09-30
  * @link https://github.com/Mattia-Carcione/xeno-js
  */
-export class DrizzleGenerator implements IGenerator {
-  shouldGenerate(options: ScaffoldingOptions): boolean {
-    return options.database && !options.sqlLite
-  }
+export class DrizzleGenerator implements IGenerator<CoreOptions> {
+  constructor(private readonly _fileService: IFileService) {}
 
-  async generate(projectPath: string, _options: ScaffoldingOptions): Promise<void> {
+  async generate(projectPath: string, _options: CoreOptions): Promise<void> {
     const configContent = this.composeDrizzleConfig()
     const filePath = path.join(projectPath, 'drizzle.config.ts')
-    await FileUtils.writeFileRecursive(filePath, configContent)
+    await this._fileService.writeFileRecursive(filePath, configContent)
 
     const schemaContent = this.composeSchema()
-    await FileUtils.writeFileRecursive(path.join(projectPath, 'src', 'schema.ts'), schemaContent)
+    await this._fileService.writeFileRecursive(
+      path.join(projectPath, 'src', 'schema.ts'),
+      schemaContent,
+    )
   }
 
   private composeDrizzleConfig(): string {
@@ -57,22 +58,29 @@ export default defineConfig({
  * The 'usersTable' serves as a baseline example. 
  * You can add more tables, relations, and indexes according to your domain requirements.
  */
-//export const usersTable = pgTable('users', {
-//  id: serial('id').primaryKey(),
-//  name: text('name').notNull(),
-//  email: text('email').notNull().unique(),
-//  isDeleted: boolean('is_deleted').notNull().default(false),
-//  deletedAt: timestamp('deleted_at'),
-//  createdAt: timestamp('created_at').defaultNow(),
-//});
+export const usersTable = pgTable('users', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
+  isDeleted: boolean('is_deleted').notNull().default(false),
+  deletedAt: timestamp('deleted_at'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
 
 /**
  * Types inferred from the schema.
  * - UserDto: Represents the shape of the data retrieved from the database ($inferSelect).
  * - NewUserDto: Represents the shape of the data required to insert a new record ($inferInsert).
  */
-//export type UserDto = typeof usersTable.$inferSelect;
-//export type NewUserDto = typeof usersTable.$inferInsert;
+export type UserDto = typeof usersTable.$inferSelect;
+export type NewUserDto = typeof usersTable.$inferInsert;
+
+/**
+ * Centralized Database Schema dictionary.
+ */
+export type DbSchema = {
+  users: typeof usersTable;
+};
 `
   }
 }

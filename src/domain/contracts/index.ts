@@ -1,2 +1,6 @@
+export type * from './icommand-cli.contracts'
+export type * from './icommand-runner.contracts'
+export type * from './idispatch.contracts'
+export type * from './ifile-service.contracts'
 export type * from './igenerator.contracts'
 export type * from './iscaffold-strategy.contracts'

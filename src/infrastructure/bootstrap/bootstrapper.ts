@@ -4,8 +4,8 @@ import { resolve } from 'node:path'
 
 import pc from 'picocolors'
 
-import type { IGenerator } from '@/domain'
-import { type BaseOptions, type ScaffoldingOptions } from '@/shared'
+import type { IGenerator } from '../../domain'
+import { type BaseOptions, type ScaffoldingOptions } from '../../shared'
 
 export class Bootstrapper<T extends BaseOptions = ScaffoldingOptions> {
   constructor(private readonly _generators: IGenerator<T>[]) {}

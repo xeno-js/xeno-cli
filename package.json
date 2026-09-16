@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Xeno CLI — Command Line Interface for Xeno projects",
   "bin": {
-    "xeno": "./dist/index.js"
+    "xeno-js": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -37,13 +37,11 @@
     "prompts": "^2.4.2"
   },
   "devDependencies": {
-    "@types/node": "^26.0.0",
-    "@types/prompts": "^2.4.9",
-    "tsx": "^4.22.4",
-    "typescript": "^6.0.3",
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
     "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.1",
+    "@types/prompts": "^2.4.9",
     "@vitest/coverage-v8": "^4.1.7",
     "eslint": "^10.4.0",
     "eslint-config-prettier": "^10.1.8",
@@ -51,6 +49,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.0.5",
     "prettier": "^3.8.3",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.0",
     "vitest": "^4.1.7"
   }
