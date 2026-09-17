@@ -33,12 +33,6 @@ export class ReadmeGenerator implements IGenerator<CoreOptions> {
 
 ---
 
-> ⚠️ **Beta Status**: \`@xeno/core\` is currently in **beta**. The API may undergo
-> breaking changes. To install the latest beta version, use:
-> \`npm install @xeno/core@beta\`
-
----
-
 ## What is Xeno?
 
 **Xeno** is an enterprise-grade, runtime-agnostic architectural framework for
@@ -303,30 +297,6 @@ a clean, pre-configured architecture tailored to your specific requirements.
 If you want to learn how to use it, see the full options available, or
 understand how the scaffolding engine works, check the
 **[CLI Documentation](https://www.xeno-js.it/cli/overview)**.
-
----
-
-## 🗺️ Release Roadmap & Lifecycle
-
-Xeno is currently in **Beta**. Below are my current development tracks:
-
-### 🟢 Current Phase: v1.0.0-beta.x (Core Architecture)
-
-- **Enhancing the Xeno CLI**: Developing robust scaffolding generators to
-  instantly build clean command, query, and handler boilerplates so developers
-  can focus strictly on core domain constraints.
-- **Advanced Datasource Base Implementations**: Improving concrete abstract
-  layers for relational multi-tenant models, adding seamless support
-  out-of-the-box for structured transactional stores.
-
-### 🟡 In Development: v1.0.0-rc.x (Developer Experience)
-
-- **Native Distributed Eventing (Kafka)**: Introducing fully decoupled outbox
-  pipeline support and event handlers tailored for high-throughput Kafka
-  streaming networks.
-- **HTTP Core Optimizations**: Maximizing processing capabilities of internal
-  extractors, refining payload performance benchmarks, and offering zero-config
-  bindings for widely adopted Node servers.
 
 ---
 

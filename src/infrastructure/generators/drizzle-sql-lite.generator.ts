@@ -51,7 +51,7 @@ export default defineConfig({
   * Place your application tables here (this file is scaffolded by the CLI when
   * the user opts into SQLite support).
   */
- export const tenantsTable = sqliteTable('tenants', {
+ export const usersTable = sqliteTable('users', {
    id: integer('id').primaryKey().notNull(),
    name: text('name').notNull(),
    description: text('description'),

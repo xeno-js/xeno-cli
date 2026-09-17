@@ -8,7 +8,8 @@ export class MainGenerator implements IGenerator<CoreOptions> {
 
   public async generate(projectPath: string, options: CoreOptions): Promise<void> {
     const content = `import 'dotenv/config';
-import { bootstrap, TOKENS } from './bootstrap';
+import { bootstrap } from './bootstrap';
+import { TOKENS } from '@xeno-js/core';
 
 /**
  * Main Application Entry Point

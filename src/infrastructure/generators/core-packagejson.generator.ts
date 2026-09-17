@@ -17,11 +17,10 @@ export class PackageJsonCoreGenerator implements IGenerator<CoreOptions> {
       scripts: {
         start: 'tsx src/main.ts',
         build: 'tsc --project tsconfig.json',
-        g: 'xeno generate',
+        g: 'xeno-js generate',
       } as Record<string, string>,
       dependencies: {
         '@xeno-js/core': 'latest',
-        '@xeno-js/shared': 'latest',
         'dotenv': '^16.4.5',
       } as Record<string, string>,
       devDependencies: {
