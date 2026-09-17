@@ -1,8 +1,7 @@
-import { type BaseOptions, type ScaffoldingOptions } from '@/shared'
-
+import { type BaseOptions, type ScaffoldingOptions } from '../../shared'
 import { type IGenerator } from './igenerator.contracts'
 
-export interface IScaffoldStrategy {
+export interface IScaffoldStrategy<T extends BaseOptions> {
   promptOptions(targetDir: string): Promise<ScaffoldingOptions>
-  getGenerators<T extends BaseOptions>(options: ScaffoldingOptions): Promise<IGenerator<T>[]>
+  getGenerators(options: ScaffoldingOptions): Promise<IGenerator<T>[]>
 }
