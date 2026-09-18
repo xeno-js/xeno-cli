@@ -61,6 +61,7 @@ export class CoreScaffoldStrategy implements IScaffoldStrategy<CoreOptions> {
     const { GitIgnoreGenerator } = await import('../generators/gitignore.generator.js')
     const { ReadmeGenerator } = await import('../generators/core/readme.generator.js')
     const { RegistryGenerator } = await import('../generators/core/registry.generator.js')
+    const { TsconfigGenerator } = await import('../generators/core/tsconfig.generator.js')
 
     generators.push(new PackageJsonCoreGenerator(this._fileService))
     generators.push(new BootstrapGenerator(this._fileService))
@@ -68,6 +69,7 @@ export class CoreScaffoldStrategy implements IScaffoldStrategy<CoreOptions> {
     generators.push(new GitIgnoreGenerator(this._fileService))
     generators.push(new ReadmeGenerator(this._fileService))
     generators.push(new RegistryGenerator(this._fileService))
+    generators.push(new TsconfigGenerator(this._fileService))
 
     if (options.database !== CORE_CONSTANTS.NONE) {
       if (options.database === CORE_CONSTANTS.DRIZZLE) {

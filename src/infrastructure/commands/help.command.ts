@@ -14,17 +14,50 @@ export class HelpCommand implements ICliCommand {
   public async execute(): Promise<void> {
     console.info(pc.greenBright('\n🚀 Xeno CLI - Usage Guide\n'))
 
-    console.info(pc.bold('Create a new project:'))
-    console.info(`  xeno-js new [my-app] [--vue | --core]\n`)
+    // --- NEW PROJECT ---
+    console.info(pc.bold(pc.blue('1. Create a new project:')))
+    console.info(`  xeno-js new ${pc.yellow('<name>')} ${pc.cyan('[--vue | --core]')}`)
+    console.info(`  ${pc.gray('•')} ${pc.yellow('<name>')}: The name of your project directory.`)
+    console.info(
+      `  ${pc.gray('•')} ${pc.cyan('[--vue | --core]')}: Project type. ${pc.gray('(Default: --core)')}`,
+    )
+    console.info(`    - ${pc.cyan('--core')}: Initializes a Backend project (Node.js/TS).`)
+    console.info(`    - ${pc.cyan('--vue')}: Initializes a Frontend project (Vue.js).\n`)
 
-    console.info(pc.bold('Generate CQRS components in existing project:'))
-    console.info(`  xeno-js generate command [Name]   ${pc.gray('(Alias: xeno-js g command)')}`)
-    console.info(`  xeno-js generate query [Name]     ${pc.gray('(Alias: xeno-js g query)')}\n`)
+    // --- GENERATE ---
+    console.info(pc.bold(pc.blue('2. Generate CQRS components:')))
+    console.info(
+      `  xeno-js generate ${pc.magenta('<type>')} ${pc.yellow('<Name>')} ${pc.cyan('[--vue | --core]')} ${pc.green('[--output <path>]')}`,
+    )
+    console.info(
+      `  ${pc.gray('•')} ${pc.magenta('<type>')}: Component type to generate (${pc.magenta('command')} | ${pc.magenta('query')}).`,
+    )
+    console.info(
+      `  ${pc.gray('•')} ${pc.yellow('<Name>')}: The name of the component (e.g., UserCreate).`,
+    )
+    console.info(
+      `  ${pc.gray('•')} ${pc.cyan('[--vue | --core]')}: Target context. ${pc.gray('(Default: --core)')}`,
+    )
+    console.info(
+      `    - ${pc.cyan('--core')}: Generates Controller, Handler, Command/Query, Module, and Zod/DB schemas.`,
+    )
+    console.info(
+      `    - ${pc.cyan('--vue')}: Generates frontend-specific files (Stores, Services, etc.).`,
+    )
+    console.info(
+      `  ${pc.gray('•')} ${pc.green('[--output | -o]')}: Custom destination path inside 'src/'. ${pc.gray('(Default: src/<name-in-lowercase>)')}`,
+    )
+    console.info(
+      `  ${pc.gray('Alias:')} ${pc.gray('xeno-js g <type> <Name> [--vue | --core] [-o | --o <path>]')}\n`,
+    )
 
-    console.info(pc.bold('Help:'))
-    console.info(`  xeno-js --help     ${pc.gray('(Alias: xeno-js --h | -h)')}\n`)
+    // --- HELP ---
+    console.info(pc.bold(pc.blue('3. Help:')))
+    console.info(`  xeno-js --help     ${pc.gray('Displays this guide.')}`)
+    console.info(`  ${pc.gray('Alias:')} ${pc.gray('xeno-js --h | -h')}\n`)
 
-    console.info(pc.bold('See documentation:'))
-    console.info(`  https://www.xeno-js.it\n`)
+    // --- DOCS ---
+    console.info(pc.bold(pc.blue('Documentation:')))
+    console.info(`  ${pc.underline('https://www.xeno-js.it')}\n`)
   }
 }

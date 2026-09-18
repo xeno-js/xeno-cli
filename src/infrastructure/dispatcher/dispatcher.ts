@@ -33,7 +33,9 @@ export class CliDispatcher implements IDispatcher {
 
     if (!Guards.isDefined(command)) {
       console.error(pc.red(`\n❌ '${action}' is not a command`))
-      console.info(pc.yellow(`See 'xeno-js --help'.\n`))
+      console.info(
+        pc.yellow(`See 'xeno-js --help' for cli usage guide or https://www.xeno-js.it for docs.\n`),
+      )
       process.exit(1)
     }
 

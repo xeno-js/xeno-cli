@@ -1,11 +1,9 @@
-// src/cli/commands/generate.command.ts
-// import pc from 'picocolors';
+import pc from 'picocolors'
+
 import type { ICliCommand } from '../../domain'
-// import { Bootstrapper } from '../bootstrap';
-// import type { IScaffoldStrategy } from '../../domain';
-// import { BaseOptions, Guards } from '../../shared';
 import { Guards } from '../../shared'
 import { COMMAND_CONSTANTS } from '../../shared/constants/command.constants'
+import { FileUtils } from '../file'
 
 export class GenerateCommand implements ICliCommand {
   public readonly name: string = 'generate'
@@ -14,29 +12,36 @@ export class GenerateCommand implements ICliCommand {
   public async execute(args: string[]): Promise<void> {
     const type = args[0] // "command" o "query"
     const componentName = args[1] // es: "User"
+    const isCore = args.includes('--core')
+    const isVue = args.includes('--vue')
 
     if (Guards.isNullOrEmpty(type) || Guards.isNullOrEmpty(componentName)) {
-      throw new Error(`Invalid syntax. Usage: xeno-js g [command | query] <Name>`)
+      throw new Error(`Invalid syntax. Usage: xeno-js g [command | query] <Name> [--core | --vue]`)
     }
 
-    // const targetDir = process.cwd();
-    // let strategy: IScaffoldStrategy<BaseOptions>;
+    let outputPath: string | undefined = undefined
+    const outputIndex = args.findIndex((arg) => arg === '--output' || arg === '-o' || arg === '--o')
+    if (outputIndex !== -1 && args.length > outputIndex + 1) {
+      outputPath = args[outputIndex + 1]
+    }
+
+    const targetDir = process.cwd()
+    const fileService = new FileUtils()
 
     if (type === COMMAND_CONSTANTS.COMMAND) {
-      // NOTE: Qui importeremo la GenerateCommandStrategy (quando sarà creata con ts-morph)
-      // const { GenerateCommandStrategy } = await import('@/infrastructure/strategies/generate-command.strategy');
-      // strategy = new GenerateCommandStrategy(componentName);
-      throw new Error('Generate Command will be implemented with AST modifiers soon.')
+      if (isCore || !isVue) {
+        const { GenerateCommandCoreGenerator } =
+          await import('../generators/core/command/generate-command.generator.js')
+        const generator = new GenerateCommandCoreGenerator(fileService)
+        await generator.generate(targetDir, componentName, outputPath)
+        console.info(pc.green(`\n  Successfully generated command component '${componentName}'!`))
+      } else if (isVue) {
+        throw new Error('Generate Command for --vue will be implemented soon.')
+      }
     } else if (type === COMMAND_CONSTANTS.QUERY) {
       throw new Error('Generate Query will be implemented with AST modifiers soon.')
     } else {
       throw new Error(`Unsupported generator type: '${type}'. Use 'command' or 'query'.`)
     }
-
-    // const options = await strategy.promptOptions(targetDir);
-    // const generators = await strategy.getGenerators(options);
-
-    // const bootstrapper = new Bootstrapper(generators);
-    // await bootstrapper.run(targetDir, options);
   }
 }
