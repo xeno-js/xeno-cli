@@ -57,6 +57,7 @@ export class VueScaffoldStrategy implements IScaffoldStrategy<VueOptions> {
     const { RegistryGenerator } = await import('../generators/vue/registry-ts.generator.js')
     const { RouterGenerator } = await import('../generators/vue/router.generator.js')
     const { TailwindGenerator } = await import('../generators/vue/tailwind.generator.js')
+    const { UseAppVueGenerator } = await import('../generators/vue/use-app.generator.js')
 
     generators.push(new PackageJsonVueGenerator(this._fileService))
     generators.push(new ViteconfigGenerator(this._fileService))
@@ -71,6 +72,7 @@ export class VueScaffoldStrategy implements IScaffoldStrategy<VueOptions> {
     generators.push(new TailwindGenerator(this._fileService))
     generators.push(new ReadmeVueGenerator(this._fileService))
     generators.push(new GitIgnoreGenerator(this._fileService))
+    generators.push(new UseAppVueGenerator(this._fileService))
 
     return generators
   }

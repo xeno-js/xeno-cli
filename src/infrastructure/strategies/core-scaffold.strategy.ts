@@ -26,16 +26,16 @@ export class CoreScaffoldStrategy implements IScaffoldStrategy<CoreOptions> {
       { type: 'confirm', name: 'sentry', message: 'Install Sentry Logger?', initial: true },
       { type: 'confirm', name: 'redis', message: 'Install Redis?', initial: true },
       { type: 'confirm', name: 'zod', message: 'Install Zod?', initial: true },
-      {
-        type: 'select',
-        name: 'targetEnv',
-        message: 'Select target environment',
-        choices: [
-          { title: 'Console', value: 'console' },
-          { title: 'Vercel (Serverless)', value: 'vercel' },
-          { title: 'Fastify (Standalone)', value: 'fastify' },
-        ],
-      },
+      // {
+      //   type: 'select',
+      //   name: 'targetEnv',
+      //   message: 'Select target environment',
+      //   choices: [
+      //     { title: 'Console', value: 'console' },
+      //     { title: 'Vercel (Serverless)', value: 'vercel' },
+      //     { title: 'Fastify (Standalone)', value: 'fastify' },
+      //   ],
+      // },
       {
         type: 'confirm',
         name: 'gitInit',
@@ -47,6 +47,7 @@ export class CoreScaffoldStrategy implements IScaffoldStrategy<CoreOptions> {
     return {
       targetDir,
       projectType: 'core',
+      targetEnv: 'console',
       ...response,
     }
   }

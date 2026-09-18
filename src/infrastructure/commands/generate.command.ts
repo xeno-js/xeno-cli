@@ -33,10 +33,21 @@ export class GenerateCommandQuery implements ICliCommand {
         type === COMMAND_CONSTANTS.COMMAND ? COMMAND_CONSTANTS.COMMAND : COMMAND_CONSTANTS.QUERY
       const { CqrsGenerator } = await import('../generators/core/command/cqrs.generator.js')
       const generator = new CqrsGenerator(fileService)
+
       await generator.generate(targetDir, componentName, cqrsType, outputPath)
+
       console.info(pc.green(`\n  Successfully generated ${type} component '${componentName}'!`))
     } else if (isVue) {
-      throw new Error('Generate Query will be implemented with AST modifiers soon.')
+      const cqrsType =
+        type === COMMAND_CONSTANTS.COMMAND ? COMMAND_CONSTANTS.COMMAND : COMMAND_CONSTANTS.QUERY
+      const { CqrsVueGenerator } = await import('../generators/vue/command_query/cqrs.generator.js')
+      const generator = new CqrsVueGenerator(fileService)
+
+      await generator.generate(targetDir, componentName, cqrsType, outputPath)
+
+      console.info(
+        pc.green(`\n✅ Successfully generated Vue ${type} component '${componentName}'!`),
+      )
     } else {
       throw new Error(`Unsupported generator type: '${type}'. Use 'command' or 'query'.`)
     }

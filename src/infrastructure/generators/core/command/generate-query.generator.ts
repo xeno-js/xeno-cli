@@ -24,8 +24,11 @@ export class ${pascalName}Query extends BaseQuery<any> {
             '${tokenPrefix}_QUERY_HANDLER', 
             // Default cache options:
             {
+                ttl: 60,
                 cacheKey: \`${lowerName}:\${JSON.stringify(payload)}\`,
-                isUserScoped: false
+                bypassCache: false,
+                consistentRead: false
+                isUserScoped: false,
             }
         );
     }

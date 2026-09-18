@@ -19,11 +19,19 @@ export class BootstrapGenerator implements IGenerator<VueOptions> {
 
     if (options.sentry) {
       builderNodes += `\n    .addLogger((opts, config) => {
-      opts.console = config.get('VITE_APP_ENV') === 'development';
-      opts.sentry = {
-        dsn: config.getOrThrow('VITE_SENTRY_DSN'),
-        env: config.getOrThrow('VITE_APP_ENV')
-      };
+      const env = config.get(COMMON_CONSTANTS.ENV) ?? 'development'
+      const isDev = env.toLowerCase() === 'development'
+      opts.console = isDev
+      if (!isDev) {
+        opts.sentry = {
+            dsn: config.getOrThrow('VITE_SENTRY_DSN'),
+            env,
+            app,
+            router,
+            tracesSampleRate: 0.2,
+            level: LOG_LEVEL.WARN,
+        };
+      }
     })`
     } else {
       builderNodes += `\n    .addLogger((opts, config) => {
@@ -35,7 +43,7 @@ export class BootstrapGenerator implements IGenerator<VueOptions> {
       // Register custom stores, API clients, and CQRS services here
     })`
 
-    const bootstrapTs = `import { XenoAppBuilder } from '@xeno-js/vue';
+    const bootstrapTs = `import { XenoAppBuilder, LOG_LEVEL } from '@xeno-js/vue';
 import type { MyRegistry } from './registry';
 
 export async function bootstrap(app: any, router: any) {
