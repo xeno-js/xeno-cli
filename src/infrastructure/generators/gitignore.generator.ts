@@ -1,12 +1,13 @@
 import path from 'node:path'
 
-import { type IFileService, type IGenerator } from '../../domain'
-import { CORE_CONSTANTS, type CoreOptions } from '../../shared'
+import type { IFileService, IGenerator } from '../../domain'
+import type { CoreOptions, ScaffoldingOptions } from '../../shared'
+import { CORE_CONSTANTS } from '../../shared'
 
-export class GitIgnoreGenerator implements IGenerator<CoreOptions> {
+export class GitIgnoreGenerator implements IGenerator<ScaffoldingOptions> {
   constructor(private readonly _fileService: IFileService) {}
 
-  public async generate(projectPath: string, options: CoreOptions): Promise<void> {
+  public async generate(projectPath: string, options: ScaffoldingOptions): Promise<void> {
     let content = `# Dependencies
 node_modules/
 
@@ -38,7 +39,7 @@ Thumbs.db
 .idea/
 `
 
-    if (options.database === CORE_CONSTANTS.SQL_LITE) {
+    if ((options as CoreOptions).database === CORE_CONSTANTS.SQL_LITE) {
       content += `\n# SQLite Database
 *.sqlite
 *.sqlite3
@@ -47,7 +48,7 @@ Thumbs.db
     }
 
     // Ignora la cartella di compilazione locale di Vercel se l'ambiente lo richiede
-    if (options.targetEnv === CORE_CONSTANTS.VERCEL) {
+    if ((options as CoreOptions).targetEnv === CORE_CONSTANTS.VERCEL) {
       content += `\n# Vercel
 .vercel/
 `
