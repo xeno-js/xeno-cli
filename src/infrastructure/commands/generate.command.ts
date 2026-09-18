@@ -5,7 +5,7 @@ import { Guards } from '../../shared'
 import { COMMAND_CONSTANTS } from '../../shared/constants/command.constants'
 import { FileUtils } from '../file'
 
-export class GenerateCommand implements ICliCommand {
+export class GenerateCommandQuery implements ICliCommand {
   public readonly name: string = 'generate'
   public readonly aliases: string[] = ['g']
 
@@ -28,17 +28,14 @@ export class GenerateCommand implements ICliCommand {
     const targetDir = process.cwd()
     const fileService = new FileUtils()
 
-    if (type === COMMAND_CONSTANTS.COMMAND) {
-      if (isCore || !isVue) {
-        const { GenerateCommandCoreGenerator } =
-          await import('../generators/core/command/generate-command.generator.js')
-        const generator = new GenerateCommandCoreGenerator(fileService)
-        await generator.generate(targetDir, componentName, outputPath)
-        console.info(pc.green(`\n  Successfully generated command component '${componentName}'!`))
-      } else if (isVue) {
-        throw new Error('Generate Command for --vue will be implemented soon.')
-      }
-    } else if (type === COMMAND_CONSTANTS.QUERY) {
+    if (isCore || !isVue) {
+      const cqrsType =
+        type === COMMAND_CONSTANTS.COMMAND ? COMMAND_CONSTANTS.COMMAND : COMMAND_CONSTANTS.QUERY
+      const { CqrsGenerator } = await import('../generators/core/command/cqrs.generator.js')
+      const generator = new CqrsGenerator(fileService)
+      await generator.generate(targetDir, componentName, cqrsType, outputPath)
+      console.info(pc.green(`\n  Successfully generated ${type} component '${componentName}'!`))
+    } else if (isVue) {
       throw new Error('Generate Query will be implemented with AST modifiers soon.')
     } else {
       throw new Error(`Unsupported generator type: '${type}'. Use 'command' or 'query'.`)

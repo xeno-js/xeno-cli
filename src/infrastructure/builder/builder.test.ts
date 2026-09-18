@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { GenerateCommand, HelpCommand, NewProjectCommand } from '../commands'
+import { GenerateCommandQuery, HelpCommand, NewProjectCommand } from '../commands'
 import { CliDispatcher } from '../dispatcher'
 import { Builder } from './builder'
 
@@ -15,7 +15,7 @@ describe('Builder', () => {
     const dispatcher = Builder.getDispatcher()
 
     const newSpy = vi.spyOn(NewProjectCommand.prototype, 'execute').mockResolvedValue()
-    const generateSpy = vi.spyOn(GenerateCommand.prototype, 'execute').mockResolvedValue()
+    const generateSpy = vi.spyOn(GenerateCommandQuery.prototype, 'execute').mockResolvedValue()
     const helpSpy = vi.spyOn(HelpCommand.prototype, 'execute').mockResolvedValue()
 
     await dispatcher.dispatch(['new', 'demo-app'])
