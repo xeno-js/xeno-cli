@@ -55,12 +55,12 @@ export class CoreScaffoldStrategy implements IScaffoldStrategy<CoreOptions> {
     // Lazy Loading: Importiamo i moduli solo se servono!
     const generators: IGenerator<CoreOptions>[] = []
 
-    const { PackageJsonCoreGenerator } = await import('../generators/core-packagejson.generator.js')
-    const { BootstrapGenerator } = await import('../generators/bootstrap.generator.js')
-    const { EnvGenerator } = await import('../generators/env.generator.js')
+    const { PackageJsonCoreGenerator } = await import('../generators/core/packagejson.generator.js')
+    const { BootstrapGenerator } = await import('../generators/core/bootstrap.generator.js')
+    const { EnvGenerator } = await import('../generators/core/env.generator.js')
     const { GitIgnoreGenerator } = await import('../generators/gitignore.generator.js')
-    const { ReadmeGenerator } = await import('../generators/readme.generator.js')
-    const { RegistryGenerator } = await import('../generators/registry.generator.js')
+    const { ReadmeGenerator } = await import('../generators/core/readme.generator.js')
+    const { RegistryGenerator } = await import('../generators/core/registry.generator.js')
 
     generators.push(new PackageJsonCoreGenerator(this._fileService))
     generators.push(new BootstrapGenerator(this._fileService))
@@ -71,17 +71,17 @@ export class CoreScaffoldStrategy implements IScaffoldStrategy<CoreOptions> {
 
     if (options.database !== CORE_CONSTANTS.NONE) {
       if (options.database === CORE_CONSTANTS.DRIZZLE) {
-        const { DrizzleGenerator } = await import('../generators/drizzle.generator.js')
+        const { DrizzleGenerator } = await import('../generators/core/drizzle.generator.js')
         generators.push(new DrizzleGenerator(this._fileService))
       } else if (options.database === CORE_CONSTANTS.SQL_LITE) {
         const { DrizzleSqlLiteGenerator } =
-          await import('../generators/drizzle-sql-lite.generator.js')
+          await import('../generators/core/drizzle-sql-lite.generator.js')
         generators.push(new DrizzleSqlLiteGenerator(this._fileService))
       }
     }
 
     if (options.targetEnv === TARGET_ENV_CONSTANTS.CONSOLE) {
-      const { MainGenerator } = await import('../generators/main.generator.js')
+      const { MainGenerator } = await import('../generators/core/main.generator.js')
       generators.push(new MainGenerator(this._fileService))
     }
     // else if (options.targetEnv === CORE_CONSTANTS.VERCEL) {

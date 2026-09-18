@@ -1,15 +1,12 @@
 import path from 'node:path'
 
-import { type IFileService, type IGenerator } from '../../domain'
-import { CORE_CONSTANTS, type CoreOptions } from '../../shared'
-import { FileUtils } from '../file/file.service'
+import { type IFileService, type IGenerator } from '../../../domain'
+import { CORE_CONSTANTS, type CoreOptions } from '../../../shared'
 
 export class EnvGenerator implements IGenerator<CoreOptions> {
   constructor(private readonly _fileService: IFileService) {}
 
   public async generate(projectPath: string, options: CoreOptions): Promise<void> {
-    const fileUtils = new FileUtils()
-
     let content = `# ─────────────────────────────────────────────────────────────────────────────
 # Xeno APPLICATION ENVIRONMENT VARIABLES
 # ─────────────────────────────────────────────────────────────────────────────
@@ -66,7 +63,7 @@ SENTRY_ENVIRONMENT=development
     const envPath = path.join(projectPath, '.env')
     const envExamplePath = path.join(projectPath, '.env.example')
 
-    await fileUtils.writeFileRecursive(envPath, content)
-    await fileUtils.writeFileRecursive(envExamplePath, content)
+    await this._fileService.writeFileRecursive(envPath, content)
+    await this._fileService.writeFileRecursive(envExamplePath, content)
   }
 }

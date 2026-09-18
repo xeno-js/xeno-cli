@@ -1,8 +1,8 @@
 // src/infrastructure/generators/env-vue.generator.ts
 import path from 'node:path'
 
-import { type IFileService, type IGenerator } from '../../domain'
-import type { VueOptions } from '../../shared'
+import { type IFileService, type IGenerator } from '../../../domain'
+import type { VueOptions } from '../../../shared'
 
 export class EnvVueGenerator implements IGenerator<VueOptions> {
   constructor(private readonly _fileService: IFileService) {}

@@ -1,7 +1,7 @@
 import path from 'node:path'
 
-import type { IFileService, IGenerator } from '../../domain'
-import { type CoreOptions } from '../../shared'
+import type { IFileService, IGenerator } from '../../../domain'
+import { type CoreOptions } from '../../../shared'
 
 /**
  * @class DrizzleGenerator

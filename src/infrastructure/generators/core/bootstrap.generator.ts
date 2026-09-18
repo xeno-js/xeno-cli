@@ -1,7 +1,7 @@
 import path from 'node:path'
 
-import { type IFileService, type IGenerator } from '../../domain'
-import { CORE_CONSTANTS, type CoreOptions } from '../../shared'
+import { type IFileService, type IGenerator } from '../../../domain'
+import { CORE_CONSTANTS, type CoreOptions } from '../../../shared'
 
 export class BootstrapGenerator implements IGenerator<CoreOptions> {
   constructor(private readonly _fileService: IFileService) {}

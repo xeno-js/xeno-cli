@@ -17,10 +17,8 @@ async function init() {
   try {
     const dispatcher = Builder.getDispatcher()
 
-    // Estrazione argomenti ignorando il binario e il path di esecuzione
     const rawArgs = process.argv.slice(2)
 
-    // Invocazione del router interno
     await dispatcher.dispatch(rawArgs)
   } catch (error) {
     console.error(pc.red('\n❌ Execution interrupted:'))

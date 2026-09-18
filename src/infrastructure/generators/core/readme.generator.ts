@@ -1,7 +1,7 @@
 import path from 'node:path'
 
-import { type IFileService, type IGenerator } from '../../domain'
-import type { CoreOptions } from '../../shared'
+import type { IFileService, IGenerator } from '../../../domain'
+import { type CoreOptions } from '../../../shared'
 
 export class ReadmeGenerator implements IGenerator<CoreOptions> {
   constructor(private readonly _fileService: IFileService) {}

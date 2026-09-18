@@ -1,7 +1,7 @@
 import path from 'node:path'
 
-import { type IFileService, type IGenerator } from '../../domain'
-import { CORE_CONSTANTS, type CoreOptions } from '../../shared'
+import type { IFileService, IGenerator } from '../../../domain'
+import { CORE_CONSTANTS, type CoreOptions } from '../../../shared'
 
 export class TsconfigGenerator implements IGenerator<CoreOptions> {
   constructor(private readonly _fileService: IFileService) {}
