@@ -85,6 +85,8 @@ export function use${pascalName}() {
     const error = ref<string | null>(null);
 
     const execute = async (payload: ${pascalName}Request): Promise<ResultType<${pascalName}Response>> => {
+        const signal = new AbortController().signal;
+        
         if (loading.value) return Result.fail(AppError.create({
             name: '${pascalName}Command',
             message: '${pascalName}Command is already in progress',
@@ -101,7 +103,6 @@ export function use${pascalName}() {
             const command = new ${pascalName}Command();
 
             const result = await mediator.send(command, async () => {
-                const signal = new AbortController().signal;
                 return await handler.handle(command, signal);
             });
 

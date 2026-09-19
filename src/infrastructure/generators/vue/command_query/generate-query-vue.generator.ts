@@ -93,7 +93,9 @@ export function use${pascalName}() {
  *     register('${tokenPrefix}_HANDLER', new ${pascalName}Handler());
  * });
  */
-    const fetch = async (): Promise<ResultType<${pascalName}Response>> => {
+const fetch = async (): Promise<ResultType<${pascalName}Response>> => {
+        const signal = new AbortController().signal;
+
         if (loading.value) return Result.fail(AppError.create({
             name: '${pascalName}Query',
             message: '${pascalName}Query is already in progress',
@@ -111,7 +113,6 @@ export function use${pascalName}() {
             const query = new ${pascalName}Query();
 
             const result = await mediator.query(query, async () => {
-                const signal = new AbortController().signal;
                 return await handler.handle(query, signal);
             });
 
