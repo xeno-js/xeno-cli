@@ -47,9 +47,7 @@ export class ${pascalName}Handler extends BaseHandler<${pascalName}Command, any>
         super(identityFactory);
     }
 
-    public async handle(request: ${pascalName}Command, signal: AbortSignal): Promise<ResultType<any>> {
-        AppError.throwIfAborted(signal, '${pascalName}Handler.handle');
-
+    public async executeAsync(request: ${pascalName}Command, singal: AbortSignal): Promise<ResultType<any>> {
         // TODO: Implement your business logic here
 
         return Result.ok();

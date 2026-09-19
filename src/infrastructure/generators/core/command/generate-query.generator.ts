@@ -56,9 +56,7 @@ export class ${pascalName}Handler extends BaseHandler<${pascalName}Query, any> {
         super(identityFactory);
     }
 
-    public async handle(request: ${pascalName}Query, signal: AbortSignal): Promise<ResultType<any>> {
-        AppError.throwIfAborted(signal, '${pascalName}Handler.handle');
-
+    public async executeAsync(request: ${pascalName}Query, singal: AbortSignal): Promise<ResultType<any>> {
         // TODO: Implement your query logic here
 
         return Result.ok();
