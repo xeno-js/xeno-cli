@@ -7,8 +7,8 @@ export class UseAppVueGenerator implements IGenerator<VueOptions> {
   constructor(private readonly _fileService: IFileService) {}
 
   public async generate(projectPath: string, _options: VueOptions): Promise<void> {
-    const content = `import { Guards, type Nullable } from "@xeno-js/shared";
-import { XENO_SERVICES_KEY } from "@xeno-js/vue";
+    const content = `import type { Nullable } from "@xeno-js/vue";
+import { Guards, XENO_SERVICES_KEY } from "@xeno-js/vue";
 import { inject } from "vue";
 import type { MyRegistry } from "./registry";
 
