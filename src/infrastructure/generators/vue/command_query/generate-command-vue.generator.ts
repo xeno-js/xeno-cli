@@ -83,9 +83,10 @@ import type { ${pascalName}Request, ${pascalName}Response } from './${lowerName}
 export function use${pascalName}() {
     const loading = ref(false);
     const error = ref<string | null>(null);
+    let abortController: AbortController | null = null;
 
     const execute = async (payload: ${pascalName}Request): Promise<ResultType<${pascalName}Response>> => {
-        const signal = new AbortController().signal;
+        abortController = new AbortController();
         
         if (loading.value) return Result.fail(AppError.create({
             name: '${pascalName}Command',
@@ -103,7 +104,7 @@ export function use${pascalName}() {
             const command = new ${pascalName}Command();
 
             const result = await mediator.send(command, async () => {
-                return await handler.handle(command, signal);
+                return await handler.handle(command, abortController?.signal);
             });
 
             if (!result.isOk()) {
@@ -115,6 +116,17 @@ export function use${pascalName}() {
             loading.value = false;
         }
     };
+
+    const abort = () => {
+        if (abortController) {
+            abortController.abort();
+        }
+    };
+
+    // Automatically cancel pending operations when the component unmounts
+    onUnmounted(() => {
+        abort();
+    });
 
     return { loading, error, execute };
 }

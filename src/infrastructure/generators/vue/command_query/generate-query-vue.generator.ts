@@ -79,6 +79,7 @@ export function use${pascalName}() {
     const loading = ref(false);
     const error = ref<string | null>(null);
     const data = ref<${pascalName}Response | null>(null);
+    let abortController: AbortController | null = null;
 
     /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
@@ -94,7 +95,7 @@ export function use${pascalName}() {
  * });
  */
 const fetch = async (): Promise<ResultType<${pascalName}Response>> => {
-        const signal = new AbortController().signal;
+        abortController = new AbortController();
 
         if (loading.value) return Result.fail(AppError.create({
             name: '${pascalName}Query',
@@ -113,7 +114,7 @@ const fetch = async (): Promise<ResultType<${pascalName}Response>> => {
             const query = new ${pascalName}Query();
 
             const result = await mediator.query(query, async () => {
-                return await handler.handle(query, signal);
+                return await handler.handle(query, abortController?.signal);
             });
 
             if (result.isOk()) {
@@ -127,6 +128,17 @@ const fetch = async (): Promise<ResultType<${pascalName}Response>> => {
             loading.value = false;
         }
     };
+
+    const abort = () => {
+        if (abortController) {
+            abortController.abort();
+        }
+    };
+
+    // Automatically cancel pending operations when the component unmounts
+    onUnmounted(() => {
+        abort();
+    });
 
     return { loading, error, data, fetch };
 }
