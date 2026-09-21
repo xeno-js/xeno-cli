@@ -170,7 +170,7 @@ import { ${pascalName}Handler } from './${lowerName}.handler';
 
 export const ${pascalName}Module = Object.freeze({
     register(opts: IServiceContainer<any>, _config: IConfigurationService): void {
-        opts.addScoped('${tokenPrefix}_COMMAND_CONTROLLER', (c) => new ${pascalName}Controller(c.resolve(TOKENS.REQUEST_CONTEXT), c.resolve(TOKENS.MEDIATOR)));
+        opts.addTransient('${tokenPrefix}_COMMAND_CONTROLLER', (c) => new ${pascalName}Controller(c.resolve(TOKENS.REQUEST_CONTEXT), c.resolve(TOKENS.MEDIATOR)));
         opts.addScoped('${tokenPrefix}_COMMAND_HANDLER', (c) => new ${pascalName}Handler(c.resolve(TOKENS.USER_CONTEXT_FACTORY)));
 
         /*
