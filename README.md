@@ -180,24 +180,16 @@ fix(generator): resolve output path bug in Vue scaffold
 
 ### Maintenance Scripts
 
-| Command         | Description                                                         |
-| --------------- | ------------------------------------------------------------------- |
-| `npm run build` | Compiles the TypeScript CLI source code into the `dist/` directory. |
-
-| | `npm run dev` | Runs the CLI in development mode using `tsx`.
-
-| | `npm run typecheck` | Checks types without emitting files (`tsc`).
-
-| | `npm run lint` | Runs ESLint to ensure no blocking formatting defects exist.
-
-| | `npm run format` | Automatically formats codebase files using Prettier.
-
-| | `npm run test` | Executes the Vitest test suite.
-
-| | `npm run test:coverage` | Runs tests and generates a detailed coverage
-report using the v8 provider.
-
-|
+| Command                       | Description                                                         |
+| ----------------------------- | ------------------------------------------------------------------- |
+| `npm run build`               | Compiles the TypeScript CLI source code into the `dist/` directory. |
+| `npm run dev`                 | Runs the CLI in development mode using `tsx`.                       |
+| `npm run typecheck`           | Checks types without emitting files (`tsc`).                        |
+| `npm run lint`                | Runs ESLint to ensure no blocking formatting defects exist.         |
+| `npm run format`              | Automatically formats codebase files using Prettier.                |
+| `npm run test`                | Executes the Vitest test suite.                                     |
+| `npm run test:coverage`       | Runs tests and generates a detailed coverage                        |
+| report using the v8 provider. |
 
 ---
 
