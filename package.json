@@ -1,6 +1,6 @@
 {
   "name": "@xeno-js/cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Xeno CLI — Command Line Interface for Xeno projects",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "bugs": {
     "url": "https://github.com/xeno-js/xeno-cli/issues"
   },
-  "homepage": "https:www.xeno-js.it",
+  "homepage": "https://www.xeno-js.it",
   "bin": {
     "xeno-js": "./dist/index.js"
   },
