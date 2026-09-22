@@ -8,7 +8,7 @@
 //  * @version 1.0.0
 //  * @license ISC
 //  * @since 2025-09-30
-//  * @link https://github.com/Mattia-Carcione/xeno-js
+//  * @link https://github.com/xeno-js/xeno-js
 //  */
 // export const CommandLauncher = {
 //     runCommand: (command: string, args: string[], cwd: string): Promise<void> => {

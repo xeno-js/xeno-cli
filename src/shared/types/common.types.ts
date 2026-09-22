@@ -39,7 +39,7 @@ export type ScaffoldingOptions = CoreOptions | VueOptions
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
 export type Nullable<T> = T | null
 
@@ -51,7 +51,7 @@ export type Nullable<T> = T | null
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
 export type Maybe<T> = T | null | undefined
 
@@ -63,6 +63,6 @@ export type Maybe<T> = T | null | undefined
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
 export type Dictionary<V = unknown> = Record<string, V>

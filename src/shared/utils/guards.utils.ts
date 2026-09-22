@@ -10,7 +10,7 @@ const DATE_TAG = '[object Date]'
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
 export const Guards = Object.freeze({
   /**
@@ -22,7 +22,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isDefined<TValue>(value: Maybe<TValue>): value is TValue {
     return value !== null && value !== undefined && value !== '' && !Number.isNaN(value)
@@ -37,7 +37,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isNullOrEmpty<TValue>(value: Maybe<TValue>): value is null | undefined {
     return (
@@ -57,7 +57,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   throwIfNullOrEmpty<TValue>(value: Maybe<TValue>, errorMessage: string): void {
     if (Guards.isNullOrEmpty(value)) {
@@ -75,7 +75,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   throwIfNegative(value: number, errorMessage: string): void {
     if (Guards.isInteger(value) && value < 0) {
@@ -93,7 +93,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   throwIfNotInteger(value: number, errorMessage: string): void {
     if (!Guards.isInteger(value)) {
@@ -111,7 +111,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   hasMethod(obj: unknown, methodName: string): boolean {
     if (!this.isDefined(obj)) return false
@@ -129,7 +129,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isString(value: unknown): value is string {
     return typeof value === 'string'
@@ -144,7 +144,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isNumber(value: unknown): value is number {
     return typeof value === 'number' && Number.isFinite(value)
@@ -159,7 +159,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isInteger(value: unknown): value is number {
     return Guards.isNumber(value) && Number.isInteger(value)
@@ -174,7 +174,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isBoolean(value: unknown): value is boolean {
     return typeof value === 'boolean'
@@ -189,7 +189,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isBigInt(value: unknown): value is bigint {
     return typeof value === 'bigint'
@@ -204,7 +204,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isSymbol(value: unknown): value is symbol {
     return typeof value === 'symbol'
@@ -219,7 +219,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isFunction(value: unknown): value is (...args: readonly unknown[]) => unknown {
     return typeof value === 'function'
@@ -234,7 +234,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isArray<TValue>(value: unknown): value is TValue[] {
     return Array.isArray(value)
@@ -249,7 +249,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isDate(value: unknown): value is Date {
     if (Object.prototype.toString.call(value) !== DATE_TAG) {
@@ -268,7 +268,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isError(value: unknown): value is Error {
     return value instanceof Error
@@ -283,7 +283,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isObjectRecord(value: unknown): value is Readonly<Dictionary<unknown>> {
     if (!Guards.isDefined(value)) {
@@ -302,7 +302,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isObject(value: unknown): value is object {
     return typeof value === 'object' && Guards.isDefined(value)
@@ -317,7 +317,7 @@ export const Guards = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   isPromiseLike<TValue>(value: unknown): value is PromiseLike<TValue> {
     if (!Guards.isDefined(value)) {

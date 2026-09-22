@@ -12,7 +12,7 @@ import { type CoreOptions } from '../../../shared'
  * @version 1.0.0
  * @license ISC
  * @since 2025-09-30
- * @link https://github.com/Mattia-Carcione/xeno-js
+ * @link https://github.com/xeno-js/xeno-js
  */
 export class DrizzleGenerator implements IGenerator<CoreOptions> {
   constructor(private readonly _fileService: IFileService) {}

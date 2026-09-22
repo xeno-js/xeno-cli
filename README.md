@@ -6,10 +6,10 @@
   <p><em>Enterprise-grade scaffolding and CLI toolkit for Xeno projects</em></p>
 
   <p>
-    <a href="https://github.com/Mattia-Carcione/xeno-js">
+    <a href="https://github.com/xeno-js/xeno-js">
       <img src="https://img.shields.io/badge/Powered%20by-Xeno-blueviolet?style=flat-square" alt="Powered by Xeno" />
     </a>
-    <a href="https://github.com/Mattia-Carcione/xeno-cli/blob/main/LICENSE">
+    <a href="https://github.com/xeno-js/xeno-cli/blob/main/LICENSE">
       <img src="https://img.shields.io/npm/l/@xeno-js/cli?style=flat-square" alt="License: ISC" />
     </a>
     <a href="https://www.npmjs.com/package/@xeno-js/cli">
@@ -219,7 +219,7 @@ our badge to your repository:
 
 ```html
 <a
-  href="[https://github.com/Mattia-Carcione/xeno-js](https://github.com/Mattia-Carcione/xeno-js)"
+  href="[https://github.com/xeno-js/xeno-js](https://github.com/xeno-js/xeno-js)"
   target="_blank"
 >
   <img

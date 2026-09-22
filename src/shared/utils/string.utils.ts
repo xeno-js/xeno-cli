@@ -9,7 +9,7 @@ export const StringUtils = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2026-09-18
-   * @link https://github.com/Mattia-Carcione/xeno-js
+   * @link https://github.com/xeno-js/xeno-js
    */
   splitCamelCaseWithUnderscore(input: string): string {
     if (!Guards.isString(input) || Guards.isNullOrEmpty(input)) return input
@@ -24,7 +24,7 @@ export const StringUtils = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2025-09-30
-   * @link https://github.com/Mattia-Carcione/xeno-js 
+   * @link https://github.com/xeno-js/xeno-js 
    */
   camelCase(input: string): string {
     const segments = input.split(/[-_\s]+/)
@@ -40,7 +40,7 @@ export const StringUtils = Object.freeze({
    * @author Xeno
    * @version 1.0.0
    * @since 2026-09-18
-   * @link https://github.com/Mattia-Carcione/xeno-js
+   * @link https://github.com/xeno-js/xeno-js
    */
   pascalCase(input: string): string {
     if (!Guards.isString(input) || Guards.isNullOrEmpty(input)) return ''
