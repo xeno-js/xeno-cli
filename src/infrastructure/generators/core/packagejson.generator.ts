@@ -26,30 +26,27 @@ export class PackageJsonCoreGenerator implements IGenerator<CoreOptions> {
       devDependencies: {
         '@types/node': '^20.0.0',
         'tsx': '^4.7.0',
-        'typescript': '^5.4.0',
+        'typescript': '^5.8.0',
       } as Record<string, string>,
     }
 
     // Database & ORM
     if (options.database !== CORE_CONSTANTS.NONE) {
-      if (options.database === CORE_CONSTANTS.DRIZZLE) {
-        packageJson.dependencies['drizzle-orm'] = '^0.45.2'
-        packageJson.dependencies['pg'] = '^8.22.0'
-        packageJson.dependencies['postgres'] = '^3.4.9'
-        packageJson.devDependencies['@types/pg'] = '^8.11.0'
-        packageJson.devDependencies['drizzle-kit'] = '^0.31.10'
-        packageJson.scripts['db:migrate'] = 'drizzle-kit migrate'
-      } else if (options.database === CORE_CONSTANTS.SQL_LITE) {
-        packageJson.dependencies['drizzle-orm'] = '^0.45.2'
-        packageJson.dependencies['@libsql/client'] = '^0.14.0'
-        packageJson.devDependencies['drizzle-kit'] = '^0.31.10'
-      }
+      packageJson.dependencies['drizzle-orm'] = '^0.45.3'
+      packageJson.dependencies['pg'] = '^8.23.0'
+      packageJson.dependencies['postgres'] = '^3.4.9'
+      packageJson.devDependencies['@types/pg'] = '^8.23.1'
+      packageJson.devDependencies['drizzle-kit'] = '^0.31.11'
+      packageJson.scripts['db:migrate'] = 'drizzle-kit migrate'
+      packageJson.dependencies['drizzle-orm'] = '^0.45.3'
+      packageJson.devDependencies['drizzle-kit'] = '^0.31.11'
+      packageJson.dependencies['@libsql/client'] = '^0.14.0'
       packageJson.scripts['db:generate'] = 'drizzle-kit generate'
       packageJson.scripts['db:push'] = 'drizzle-kit push'
     }
 
     // HTTP / External Calls
-    if (options.axios) packageJson.dependencies['axios'] = '^1.16.1'
+    if (options.axios) packageJson.dependencies['axios'] = '^1.20.0'
     if (options.cockatiel) packageJson.dependencies['cockatiel'] = '^4.0.0'
 
     // Logging & Observability
@@ -57,12 +54,15 @@ export class PackageJsonCoreGenerator implements IGenerator<CoreOptions> {
       packageJson.dependencies['pino'] = '^10.3.1'
       packageJson.devDependencies['pino-pretty'] = '^11.2.2'
     }
-    if (options.sentry) packageJson.dependencies['@sentry/node'] = '^7.64.0'
+    if (options.sentry) packageJson.dependencies['@sentry/node'] = '^11.0.0'
 
     // Services
-    if (options.redis) packageJson.dependencies['ioredis'] = '^5.3.1'
-    if (options.supabase) packageJson.dependencies['@supabase/supabase-js'] = '^2.35.0'
-    if (options.zod) packageJson.dependencies['zod'] = '^4.4.3'
+    if (options.redis) packageJson.dependencies['ioredis'] = '^6.0.0'
+    if (options.supabase) {
+      packageJson.dependencies['@supabase/supabase-js'] = '^2.117.1'
+      packageJson.dependencies['@supabase/ssr'] = '^0.12.7'
+    }
+    if (options.zod) packageJson.dependencies['zod'] = '^4.6.5'
 
     const filePath = path.join(projectPath, 'package.json')
     await this._fileService.writeFileRecursive(filePath, JSON.stringify(packageJson, null, 2))
