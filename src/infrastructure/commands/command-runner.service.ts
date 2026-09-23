@@ -20,7 +20,7 @@ export class CommandRunner implements ICommandRunner {
       const child = spawn(cmd, args, {
         cwd,
         stdio: 'inherit',
-        shell: false,
+        shell: isWin,
       })
 
       child.on('error', (error) => {
