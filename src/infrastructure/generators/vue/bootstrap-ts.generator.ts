@@ -19,7 +19,7 @@ export class BootstrapGenerator implements IGenerator<VueOptions> {
 
     if (options.sentry) {
       builderNodes += `\n    .addLogger((opts, config) => {
-      const env = config.get(COMMON_CONSTANTS.ENV) ?? 'development'
+      const env = config.get('APP_ENV') ?? 'development'
       const isDev = env.toLowerCase() === 'development'
       opts.console = isDev
       if (!isDev) {

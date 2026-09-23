@@ -23,7 +23,8 @@ export class DrizzleSqlLiteGenerator implements IGenerator<CoreOptions> {
   }
 
   private composeDrizzleConfig(): string {
-    return `import 'dotenv/config';
+    return `/// <reference types="node" />
+import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
 
 /**
