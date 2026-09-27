@@ -1,7 +1,7 @@
 {
   "name": "@xeno-js/cli",
   "version": "0.1.3",
-  "description": "Xeno CLI — Command Line Interface for Xeno.JS projects",
+  "description": "Official Xeno.JS CLI for scaffolding and generating explicit TypeScript application architecture.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xeno-js/xeno-cli.git"
@@ -9,7 +9,29 @@
   "bugs": {
     "url": "https://github.com/xeno-js/xeno-cli/issues"
   },
+  "files": [
+    "dist"
+  ],
   "homepage": "https://www.xeno-js.it",
+  "keywords": [
+    "typescript",
+    "nodejs",
+    "xeno",
+    "xeno-js",
+    "application-architecture",
+    "application-framework",
+    "scaffolding",
+    "code-generator",
+    "cli",
+    "ddd",
+    "domain-driven-design",
+    "cqrs",
+    "dependency-injection",
+    "clean-architecture",
+    "modular-architecture",
+    "vue",
+    "vuejs"
+  ],
   "bin": {
     "xeno-js": "./dist/index.js"
   },
@@ -36,19 +58,8 @@
     "release:minor": "npm version minor && npm run changelog && npm run prepublishOnly && npm publish --access public",
     "release:major": "npm version major && npm run changelog && npm run prepublishOnly && npm publish --access public"
   },
-  "keywords": [
-    "xeno",
-    "xeno-cli",
-    "scaffolding",
-    "code-generator",
-    "cli",
-    "clean-architecture",
-    "ddd",
-    "cqrs",
-    "typescript"
-  ],
   "author": "Xeno",
-  "license": "ISC",
+  "license": "MIT",
   "engines": {
     "node": ">=20.0.0"
   },
