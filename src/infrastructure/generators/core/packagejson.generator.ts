@@ -17,7 +17,6 @@ export class PackageJsonCoreGenerator implements IGenerator<CoreOptions> {
       scripts: {
         start: 'tsx src/main.ts',
         build: 'tsc --project tsconfig.json',
-        g: 'xeno-js generate',
       } as Record<string, string>,
       dependencies: {
         '@xeno-js/core': 'latest',

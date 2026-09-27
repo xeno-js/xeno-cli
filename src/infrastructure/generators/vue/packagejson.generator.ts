@@ -16,7 +16,6 @@ export class PackageJsonVueGenerator implements IGenerator<VueOptions> {
         dev: 'vite',
         build: 'vue-tsc -b && vite build',
         preview: 'vite preview',
-        g: 'xeno-js generate',
       } as Record<string, string>,
       dependencies: {
         '@xeno-js/vue': 'latest',

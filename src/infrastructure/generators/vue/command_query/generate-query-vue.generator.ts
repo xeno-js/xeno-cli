@@ -11,6 +11,10 @@ export class GenerateQueryVueGenerator {
     tokenPrefix: string,
     componentDir: string,
   ): Promise<void> {
+    const appDir = path.join(componentDir, 'application')
+    const domainDir = path.join(componentDir, 'domain')
+    const presDir = path.join(componentDir, 'presentation')
+
     // 1. Query (Application)
     const queryContent = `import { Query } from '@xeno-js/vue';
 import type { ${pascalName}Response } from './${lowerName}.model';
@@ -28,14 +32,14 @@ export class ${pascalName}Query extends Query<${pascalName}Response> {
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `${lowerName}.query.ts`),
+      path.join(appDir, `${lowerName}.query.ts`),
       queryContent,
     )
 
-    const handlerContent = `import type { IHandler, ResultType } from '@xeno-js/vue';
-import { AppError, Result } from '@xeno-js/vue';
+    const handlerContent = `import type { ResultType } from '@xeno-js/vue';
+import { AppError, BaseHandler, Result } from '@xeno-js/vue';
 import type { ${pascalName}Query } from './${lowerName}.query';
-import type { ${pascalName}Response } from './${lowerName}.model';
+import type { ${pascalName}Response } from '../domain/${lowerName}.model';
 
     /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
@@ -50,21 +54,19 @@ import type { ${pascalName}Response } from './${lowerName}.model';
  *     register('${tokenPrefix}_HANDLER', new ${pascalName}Handler());
  * });
  */
-export class ${pascalName}Handler implements IHandler<${pascalName}Query, ${pascalName}Response> {
+export class ${pascalName}Handler extends BaseHandler<${pascalName}Query, ${pascalName}Response> {
     constructor(
         // TODO: Inject your remote DataSources or other services here
     ) {}
 
-    public async handle(query: ${pascalName}Query, signal: AbortSignal): Promise<ResultType<${pascalName}Response>> {
-        AppError.throwIfAborted(signal, this.constructor.name);
-
+    protected async executeAsync(query: ${pascalName}Query, signal: AbortSignal): Promise<ResultType<${pascalName}Response>> {
         // TODO: Implement your frontend business logic or API calls here
         return Result.ok();
     }
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `${lowerName}.handler.ts`),
+      path.join(appDir, `${lowerName}.handler.ts`),
       handlerContent,
     )
 
@@ -72,8 +74,8 @@ export class ${pascalName}Handler implements IHandler<${pascalName}Query, ${pasc
     const composableContent = `import { ref } from 'vue';
 import { AppError, Result, type ApiResponseDto, type ResultType } from '@xeno-js/vue';
 import { ServicesUtils } from '@/use-app';
-import { ${pascalName}Query } from './${lowerName}.query';
-import type { ${pascalName}Response } from './${lowerName}.model';
+import { ${pascalName}Query } from '../application/${lowerName}.query';
+import type { ${pascalName}Response } from '../domain/${lowerName}.model';
 
 export function use${pascalName}() {
     const loading = ref(false);
@@ -144,7 +146,7 @@ const fetch = async (): Promise<ResultType<${pascalName}Response>> => {
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `use-${lowerName}.composable.ts`),
+      path.join(presDir, `use-${lowerName}.composable.ts`),
       composableContent,
     )
 
@@ -154,7 +156,7 @@ const fetch = async (): Promise<ResultType<${pascalName}Response>> => {
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `${lowerName}.model.ts`),
+      path.join(domainDir, `${lowerName}.model.ts`),
       modelContent,
     )
   }

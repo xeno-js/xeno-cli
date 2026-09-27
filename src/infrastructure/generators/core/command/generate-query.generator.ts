@@ -12,14 +12,22 @@ export class GenerateQueryCoreGenerator {
     componentDir: string,
     hasZod: boolean,
   ): Promise<void> {
+    const appDir = path.join(componentDir, 'application')
+    const infraDir = path.join(componentDir, 'infrastructure')
+    const domainDir = path.join(componentDir, 'domain')
+    const presDir = path.join(componentDir, 'presentation')
+
     const queryContent = `import { BaseQuery } from '@xeno-js/core';
+export interface ${pascalName}Payload {
+    // TODO: Define your command payload properties here
+}
 
 /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
- * Please replace <any> with your specific payload and response types.
+ * Please replace <void> with your specific payload and response types.
  */
-export class ${pascalName}Query extends BaseQuery<any> {
-    constructor(public readonly payload: any) {
+export class ${pascalName}Query extends BaseQuery<void> {
+    constructor(public readonly payload: ${pascalName}Payload) {
         super(
             '${tokenPrefix}_QUERY_HANDLER', 
             // Default cache options:
@@ -35,7 +43,7 @@ export class ${pascalName}Query extends BaseQuery<any> {
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `${lowerName}.query.ts`),
+      path.join(appDir, `${lowerName}.query.ts`),
       queryContent,
     )
 
@@ -46,9 +54,9 @@ import { ${pascalName}Query } from './${lowerName}.query';
 
 /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
- * Please replace <any> with your specific response type.
+ * Please replace <void> with your specific response type.
  */
-export class ${pascalName}Handler extends BaseHandler<${pascalName}Query, any> {
+export class ${pascalName}Handler extends BaseHandler<${pascalName}Query, void> {
     constructor(
         identityFactory: IFactory<void, UserContext>
         // TODO: Inject your ReadDao or DataSource here
@@ -56,7 +64,7 @@ export class ${pascalName}Handler extends BaseHandler<${pascalName}Query, any> {
         super(identityFactory);
     }
 
-    public async executeAsync(request: ${pascalName}Query, singal: AbortSignal): Promise<ResultType<any>> {
+    protected async executeAsync(request: ${pascalName}Query, singal: AbortSignal): Promise<ResultType<void>> {
         // TODO: Implement your query logic here
 
         return Result.ok();
@@ -64,20 +72,20 @@ export class ${pascalName}Handler extends BaseHandler<${pascalName}Query, any> {
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `${lowerName}.handler.ts`),
+      path.join(appDir, `${lowerName}.handler.ts`),
       handlerContent,
     )
 
     // 3. Controller
     const controllerContent = `import type { IContextAccessor, IMediator, RequestContext, ResponseDto } from '@xeno-js/core';
 import { BaseController } from '@xeno-js/core';
-import { ${pascalName}Query } from './${lowerName}.query';
+import { ${pascalName}Query, ${pascalName}Payload } from '../presentation/${lowerName}.query';
 
 /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
- * Please replace <any, any> with your specific request and response types.
+ * Please replace <${pascalName}Payload, void> with your specific request and response types.
  */
-export class ${pascalName}Controller extends BaseController<any, any> {
+export class ${pascalName}Controller extends BaseController<${pascalName}Payload, void> {
     constructor(
         requestContext: IContextAccessor<RequestContext>,
         mediator: IMediator,
@@ -85,7 +93,7 @@ export class ${pascalName}Controller extends BaseController<any, any> {
         super(requestContext, mediator);
     }
 
-    public async handle(request: any): Promise<ResponseDto<any>> {
+    public async handle(request: ${pascalName}Payload): Promise<ResponseDto<void>> {
         const query = new ${pascalName}Query(request);
         const result = await this._query(query);
 
@@ -98,8 +106,33 @@ export class ${pascalName}Controller extends BaseController<any, any> {
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `${lowerName}.controller.ts`),
+      path.join(presDir, `${lowerName}.controller.ts`),
       controllerContent,
+    )
+
+    const entityContent = `import { Entity } from '@xeno-js/core';
+        
+        export interface ${pascalName}Props {
+            // TODO: Define your entity properties
+        }
+        
+        /*
+         * ⚠️ WARNING: ACTION REQUIRED ⚠️
+         * Adjust the properties and types according to your domain logic.
+         */
+        export class ${pascalName} extends Entity<${pascalName}Props> {
+            private constructor(props: ${pascalName}Props, id?: string) {
+                super(props, id);
+            }
+        
+            static create(props: ${pascalName}Props, id?: string): ${pascalName} {
+                return new ${pascalName}(props, id);
+            }
+        }
+        `
+    await this._fileService.writeFileRecursive(
+      path.join(domainDir, `${lowerName}.entity.ts`),
+      entityContent,
     )
 
     // 4. Schema Zod
@@ -107,16 +140,20 @@ export class ${pascalName}Controller extends BaseController<any, any> {
       const zodContent = `import { z } from 'zod';
 import { ZodUtils } from '@xeno-js/core';
 
-/*
+/**
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
- * Define the actual Zod validation schema for your query payload.
+ * Define the actual Zod validation schema for your command payload.
  */
-export const ${pascalName}Schema = ZodUtils.createQuerySchema({
-    payload: z.any() // TODO: Update with strict validation
+export const ${pascalName}Schema = ZodUtils.createCommandSchema({
+    payload: z.object({
+        // TODO: Define strict validation rules here, e.g.:
+        // email: z.string().email(),
+        // name: z.string().min(1),
+    }),
 });
 `
       await this._fileService.writeFileRecursive(
-        path.join(componentDir, `${lowerName}.schema-zod.ts`),
+        path.join(infraDir, `${lowerName}.schema-zod.ts`),
         zodContent,
       )
     }
@@ -136,8 +173,8 @@ export const ${pascalName}Module = Object.freeze({
          * ⚠️ WARNING: ACTION REQUIRED ⚠️
          * Please copy and paste the following tokens to your MyRegistry interface (usually in src/registry.ts):
          *
-         * ${tokenPrefix}_QUERY_CONTROLLER: IController<any, any>;
-         * ${tokenPrefix}_QUERY_HANDLER: IHandler<${pascalName}Query, any>;
+         * ${tokenPrefix}_QUERY_CONTROLLER: IController<${pascalName}Query, void>;
+         * ${tokenPrefix}_QUERY_HANDLER: IHandler<${pascalName}Query, void>;
          */
     }
 } as const);

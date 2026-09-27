@@ -13,21 +13,29 @@ export class GenerateCommandCoreGenerator {
     hasZod: boolean,
     hasDrizzle: boolean,
   ): Promise<void> {
+    const appDir = path.join(componentDir, 'application')
+    const infraDir = path.join(componentDir, 'infrastructure')
+    const domainDir = path.join(componentDir, 'domain')
+    const presDir = path.join(componentDir, 'presentation')
+
     // 1. Command
     const commandContent = `import { Command } from '@xeno-js/core';
+export interface ${pascalName}Payload {
+    // TODO: Define your command payload properties here
+}
 
 /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
- * Please replace <any> with your specific payload and response types.
+ * Please replace <void> with your specific payload and response types.
  */
-export class ${pascalName}Command extends Command<any> {
-    constructor(public readonly payload: any) {
+export class ${pascalName}Command extends Command<void> {
+    constructor(public readonly payload: ${pascalName}Payload) {
         super('${tokenPrefix}_COMMAND_HANDLER');
     }
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `${lowerName}.command.ts`),
+      path.join(appDir, `${lowerName}.command.ts`),
       commandContent,
     )
 
@@ -38,16 +46,16 @@ import { ${pascalName}Command } from './${lowerName}.command';
 
 /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
- * Please replace <any> with your specific response type.
+ * Please replace <void> with your specific response type.
  */
-export class ${pascalName}Handler extends BaseHandler<${pascalName}Command, any> {
+export class ${pascalName}Handler extends BaseHandler<${pascalName}Command, void> {
     constructor(
         identityFactory: IFactory<void, UserContext>
     ) {
         super(identityFactory);
     }
 
-    public async executeAsync(request: ${pascalName}Command, singal: AbortSignal): Promise<ResultType<any>> {
+    protected async executeAsync(request: ${pascalName}Command, singal: AbortSignal): Promise<ResultType<void>> {
         // TODO: Implement your business logic here
 
         return Result.ok();
@@ -55,20 +63,20 @@ export class ${pascalName}Handler extends BaseHandler<${pascalName}Command, any>
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `${lowerName}.handler.ts`),
+      path.join(appDir, `${lowerName}.handler.ts`),
       handlerContent,
     )
 
     // 3. Controller
     const controllerContent = `import type { IContextAccessor, IMediator, RequestContext, ResponseDto } from '@xeno-js/core';
 import { BaseController } from '@xeno-js/core';
-import { ${pascalName}Command } from './${lowerName}.command';
+import { ${pascalName}Command, ${pascalName}Payload } from '../application/${lowerName}.command';
 
 /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
- * Please replace <any, any> with your specific request and response types.
+ * Please replace <{pascalName}Payload, void> with your specific request and response types.
  */
-export class ${pascalName}Controller extends BaseController<any, any> {
+export class ${pascalName}Controller extends BaseController<${pascalName}Payload, void> {
     constructor(
         requestContext: IContextAccessor<RequestContext>,
         mediator: IMediator,
@@ -76,7 +84,7 @@ export class ${pascalName}Controller extends BaseController<any, any> {
         super(requestContext, mediator);
     }
 
-    public async handle(request: any): Promise<ResponseDto<any>> {
+    public async handle(request: {pascalName}Payload): Promise<ResponseDto<void>> {
         const cmd = new ${pascalName}Command(request);
         const result = await this._send(cmd);
 
@@ -89,7 +97,7 @@ export class ${pascalName}Controller extends BaseController<any, any> {
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `${lowerName}.controller.ts`),
+      path.join(presDir, `${lowerName}.controller.ts`),
       controllerContent,
     )
 
@@ -115,7 +123,7 @@ export class ${pascalName} extends Entity<${pascalName}Props> {
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(componentDir, `${lowerName}.entity.ts`),
+      path.join(domainDir, `${lowerName}.entity.ts`),
       entityContent,
     )
 
@@ -124,16 +132,20 @@ export class ${pascalName} extends Entity<${pascalName}Props> {
       const zodContent = `import { z } from 'zod';
 import { ZodUtils } from '@xeno-js/core';
 
-/*
+/**
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
  * Define the actual Zod validation schema for your command payload.
  */
 export const ${pascalName}Schema = ZodUtils.createCommandSchema({
-    payload: z.any() // TODO: Update with strict validation
+    payload: z.object({
+        // TODO: Define strict validation rules here, e.g.:
+        // email: z.string().email(),
+        // name: z.string().min(1),
+    }),
 });
 `
       await this._fileService.writeFileRecursive(
-        path.join(componentDir, `${lowerName}.schema-zod.ts`),
+        path.join(infraDir, `${lowerName}.schema-zod.ts`),
         zodContent,
       )
     }
@@ -157,7 +169,7 @@ export type ${pascalName}Dto = typeof ${lowerName}s.$inferSelect;
 export type New${pascalName}Dto = typeof ${lowerName}s.$inferInsert;
 `
       await this._fileService.writeFileRecursive(
-        path.join(componentDir, `${lowerName}.schema-db.ts`),
+        path.join(infraDir, `${lowerName}.schema-db.ts`),
         dbContent,
       )
     }
@@ -165,8 +177,8 @@ export type New${pascalName}Dto = typeof ${lowerName}s.$inferInsert;
     // 7. Module
     const moduleContent = `import type { IServiceContainer, IConfigurationService } from '@xeno-js/core';
 import { TOKENS } from '@xeno-js/core';
-import { ${pascalName}Controller } from './${lowerName}.controller';
-import { ${pascalName}Handler } from './${lowerName}.handler';
+import { ${pascalName}Controller } from './presentation/${lowerName}.controller';
+import { ${pascalName}Handler } from './application/${lowerName}.handler';
 
 export const ${pascalName}Module = Object.freeze({
     register(opts: IServiceContainer<any>, _config: IConfigurationService): void {
