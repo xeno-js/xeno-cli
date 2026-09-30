@@ -91,25 +91,9 @@ export class BootstrapGenerator implements IGenerator<CoreOptions> {
 import { AppBuilder, LOG_LEVEL, Nullable, TOKENS } from '@xeno-js/core';
 import type { MyRegistry } from './registry';
 
-let containerPromise: Nullable<Promise<IServiceContainer<MyRegistry>>> = null;
-
-export async function bootstrap() {
-  if (!containerPromise) {
-    containerPromise = (async () => {
-      const builder = getContainer();
-      return await builder.build();
-    })().catch((err) => {
-      containerPromise = null;
-      throw err;
-    });
-  }
-  return containerPromise;
-}
-
-function getContainer() {
 ${builderNodes}
-  return builder;
-}
+
+export const XenoApp = await builder.build()
 `
 
     const filePath = path.join(projectPath, 'src', 'bootstrap.ts')

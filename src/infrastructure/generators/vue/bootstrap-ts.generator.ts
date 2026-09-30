@@ -27,7 +27,6 @@ export class BootstrapGenerator implements IGenerator<VueOptions> {
             dsn: config.getOrThrow('VITE_SENTRY_DSN'),
             env,
             app,
-            router,
             tracesSampleRate: 0.2,
             level: LOG_LEVEL.WARN,
         };
@@ -45,12 +44,11 @@ export class BootstrapGenerator implements IGenerator<VueOptions> {
 
     const bootstrapTs = `import { XenoAppBuilder, LOG_LEVEL } from '@xeno-js/vue';
 import type { MyRegistry } from './registry';
+import App from './App.vue';
 
-export async function bootstrap(app: any, router: any) {
 ${builderNodes}
 
-  return await builder.build();
-}
+export const XenoApp = await builder.build()
 `
     await this._fileService.writeFileRecursive(
       path.join(projectPath, 'src', 'bootstrap.ts'),

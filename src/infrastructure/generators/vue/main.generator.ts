@@ -14,14 +14,14 @@ export class MainGenerator implements IGenerator<VueOptions> {
 
     const mainTs = `import { createApp } from 'vue';
 import App from './App.vue';
-import { bootstrap } from './bootstrap';
+import { XenoApp } from './bootstrap';
 import { XENO_SERVICES_KEY } from '@xeno-js/vue';${routerImport}${piniaImport}${tailwindImport}
 
 async function mountApp() {
   try {
     const app = createApp(App);
     ${options.pinia ? '\n    app.use(createPinia());' : ''}
-    const container = await bootstrap(app, router);
+    const container = await XenoApp();
     ${options.router ? '\n    app.use(router);' : ''}
     
 
