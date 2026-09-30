@@ -1,3 +1,10 @@
+## [0.1.6](https://github.com/xeno-js/xeno-cli/compare/v0.1.5...v0.1.6) (2026-09-30)
+
+### Bug Fixes
+
+- **file-service:** generating dir if not exists
+  ([a738198](https://github.com/xeno-js/xeno-cli/commit/a738198cc2ce89005be40c526b764355c6d902f9))
+
 ## [0.1.5](https://github.com/xeno-js/xeno-cli/compare/2c1a8c92c767e5784d39361e93d2c71e5b0830fe...v0.1.5) (2026-09-30)
 
 ### Bug Fixes
