@@ -264,7 +264,7 @@ Then:
 
 ```bash
 cd my-app
-npm install
+npm run start
 ```
 
 The generated application can then be extended with the components and
@@ -456,6 +456,17 @@ docs(readme): improve getting started
 
 ---
 
-# License
+## Support
 
-MIT License. See `LICENSE`.
+If Xeno is useful to you, you can support the project through the community and
+sponsorship channels documented on the website:
+
+**[Support Xeno](https://www.xeno-js.it/docs/support-us)**
+
+---
+
+## License
+
+Copyright (c) 2026 Xeno.
+
+Licensed under the [MIT License](LICENSE).

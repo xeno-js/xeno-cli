@@ -8,7 +8,7 @@ export class MainGenerator implements IGenerator<CoreOptions> {
 
   public async generate(projectPath: string, options: CoreOptions): Promise<void> {
     const content = `import 'dotenv/config';
-import { bootstrap } from './bootstrap';
+import { XenoApp } from './bootstrap';
 import { TOKENS } from '@xeno-js/core';
 
 /**
@@ -19,7 +19,7 @@ async function main() {
     console.info('⏳ Bootstrapping ${options.targetDir} application...');
     
     // Initialize the dependency injection container and infrastructure modules
-    const container = await bootstrap();
+    const container = await XenoApp();
     
     const logger = container.resolve(TOKENS.LOGGER)
     logger.info('✅ Application started successfully!');
