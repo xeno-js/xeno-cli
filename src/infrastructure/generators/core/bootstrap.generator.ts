@@ -93,8 +93,9 @@ import type { MyRegistry } from './registry';
 
 ${builderNodes}
 
-export const XenoApp = await builder.build()
-`
+export async function XenoApp{
+  return await builder.build()
+}`
 
     const filePath = path.join(projectPath, 'src', 'bootstrap.ts')
     await this._fileService.writeFileRecursive(filePath, content)

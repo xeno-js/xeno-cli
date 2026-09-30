@@ -48,7 +48,9 @@ import App from './App.vue';
 
 ${builderNodes}
 
-export const XenoApp = await builder.build()
+export async function XenoApp {
+  return await builder.build()
+}
 `
     await this._fileService.writeFileRecursive(
       path.join(projectPath, 'src', 'bootstrap.ts'),
