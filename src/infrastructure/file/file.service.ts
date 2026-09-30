@@ -1,4 +1,6 @@
-import { access, writeFile } from 'fs/promises'
+import path from 'node:path'
+
+import { access, mkdir, writeFile } from 'fs/promises'
 
 import { type IFileService } from '../../domain'
 
@@ -13,6 +15,8 @@ export class FileUtils implements IFileService {
       }
     }
 
+    const dirPath = path.dirname(filePath)
+    await mkdir(dirPath, { recursive: true })
     await writeFile(filePath, content, 'utf8')
   }
 }
