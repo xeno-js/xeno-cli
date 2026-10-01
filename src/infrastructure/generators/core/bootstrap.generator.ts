@@ -93,7 +93,7 @@ import type { MyRegistry } from './registry';
 
 ${builderNodes}
 
-export async function XenoApp{
+export async function XenoApp() {
   return await builder.build()
 }`
 
