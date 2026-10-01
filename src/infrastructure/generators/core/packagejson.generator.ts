@@ -19,7 +19,7 @@ export class PackageJsonCoreGenerator implements IGenerator<CoreOptions> {
         build: 'tsc --project tsconfig.json',
       } as Record<string, string>,
       dependencies: {
-        '@xeno-js/core': '1.2.0',
+        '@xeno-js/core': '^1.2.7',
         'dotenv': '^16.4.5',
       } as Record<string, string>,
       devDependencies: {
