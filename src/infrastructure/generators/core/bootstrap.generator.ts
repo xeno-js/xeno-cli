@@ -1,7 +1,7 @@
 import path from 'node:path'
 
 import { type IFileService, type IGenerator } from '../../../domain'
-import { CORE_CONSTANTS, type CoreOptions } from '../../../shared'
+import { CORE_CONSTANTS, type CoreOptions, TARGET_ENV_CONSTANTS } from '../../../shared'
 
 export class BootstrapGenerator implements IGenerator<CoreOptions> {
   constructor(private readonly _fileService: IFileService) {}
@@ -17,6 +17,20 @@ export class BootstrapGenerator implements IGenerator<CoreOptions> {
     .addPipeline((opts) => {
       // Add your options here
     })`
+
+    if (options.targetEnv !== TARGET_ENV_CONSTANTS.CONSOLE) {
+      if (options.targetEnv === TARGET_ENV_CONSTANTS.VERCEL) {
+        builderNodes += `
+    .addAdapter(opts => {
+        opts.vercel = true
+    })`
+      } else if (options.targetEnv === TARGET_ENV_CONSTANTS.FASTIFY) {
+        builderNodes += `
+    .addAdapter(opts => {
+        opts.fastify = true
+    })`
+      }
+    }
 
     if (options.database !== CORE_CONSTANTS.NONE) {
       if (options.database === CORE_CONSTANTS.DRIZZLE) {
