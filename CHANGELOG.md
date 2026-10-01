@@ -1,3 +1,17 @@
+## [0.1.8](https://github.com/xeno-js/xeno-cli/compare/v0.1.7...v0.1.8) (2026-10-01)
+
+### Bug Fixes
+
+- update bootstrap generator
+  ([0d6a54e](https://github.com/xeno-js/xeno-cli/commit/0d6a54e355bac3294a9b987069691f331857faca))
+
+## [0.1.7](https://github.com/xeno-js/xeno-cli/compare/v0.1.6...v0.1.7) (2026-09-30)
+
+### Bug Fixes
+
+- resolving bootstrap generators bug
+  ([cbf84fa](https://github.com/xeno-js/xeno-cli/commit/cbf84faef3a3e2e752652336e345ed9c2e283720))
+
 ## [0.1.6](https://github.com/xeno-js/xeno-cli/compare/v0.1.5...v0.1.6) (2026-09-30)
 
 ### Bug Fixes
