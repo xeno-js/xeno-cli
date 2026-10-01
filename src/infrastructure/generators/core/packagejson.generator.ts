@@ -1,7 +1,7 @@
 import path from 'node:path'
 
 import type { IFileService, IGenerator } from '../../../domain'
-import { CORE_CONSTANTS, type CoreOptions } from '../../../shared'
+import { CORE_CONSTANTS, type CoreOptions, TARGET_ENV_CONSTANTS } from '../../../shared'
 
 export class PackageJsonCoreGenerator implements IGenerator<CoreOptions> {
   constructor(private readonly _fileService: IFileService) {}
@@ -19,7 +19,7 @@ export class PackageJsonCoreGenerator implements IGenerator<CoreOptions> {
         build: 'tsc --project tsconfig.json',
       } as Record<string, string>,
       dependencies: {
-        '@xeno-js/core': '1.1.1',
+        '@xeno-js/core': '1.2.0',
         'dotenv': '^16.4.5',
       } as Record<string, string>,
       devDependencies: {
@@ -47,6 +47,10 @@ export class PackageJsonCoreGenerator implements IGenerator<CoreOptions> {
     // HTTP / External Calls
     if (options.axios) packageJson.dependencies['axios'] = '^1.20.0'
     if (options.cockatiel) packageJson.dependencies['cockatiel'] = '^4.0.0'
+    if (options.targetEnv === TARGET_ENV_CONSTANTS.FASTIFY)
+      packageJson.dependencies['fastify'] = '^5.12.5'
+    if (options.targetEnv === TARGET_ENV_CONSTANTS.VERCEL)
+      packageJson.dependencies['@vercel/node'] = '^16.0.2'
 
     // Logging & Observability
     if (options.pino) {

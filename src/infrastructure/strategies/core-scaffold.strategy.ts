@@ -26,16 +26,16 @@ export class CoreScaffoldStrategy implements IScaffoldStrategy<CoreOptions> {
       { type: 'confirm', name: 'sentry', message: 'Install Sentry Logger?', initial: true },
       { type: 'confirm', name: 'redis', message: 'Install Redis?', initial: true },
       { type: 'confirm', name: 'zod', message: 'Install Zod?', initial: true },
-      // {
-      //   type: 'select',
-      //   name: 'targetEnv',
-      //   message: 'Select target environment',
-      //   choices: [
-      //     { title: 'Console', value: 'console' },
-      //     { title: 'Vercel (Serverless)', value: 'vercel' },
-      //     { title: 'Fastify (Standalone)', value: 'fastify' },
-      //   ],
-      // },
+      {
+        type: 'select',
+        name: 'targetEnv',
+        message: 'Select target environment for HTTP adapter',
+        choices: [
+          { title: 'Console', value: 'console' },
+          { title: 'Vercel (Serverless)', value: 'vercel' },
+          { title: 'Fastify (Standalone)', value: 'fastify' },
+        ],
+      },
       {
         type: 'confirm',
         name: 'gitInit',
@@ -47,7 +47,6 @@ export class CoreScaffoldStrategy implements IScaffoldStrategy<CoreOptions> {
     return {
       targetDir,
       projectType: 'core',
-      targetEnv: 'console',
       ...response,
     }
   }
@@ -86,14 +85,13 @@ export class CoreScaffoldStrategy implements IScaffoldStrategy<CoreOptions> {
     if (options.targetEnv === TARGET_ENV_CONSTANTS.CONSOLE) {
       const { MainGenerator } = await import('../generators/core/main.generator.js')
       generators.push(new MainGenerator(this._fileService))
+    } else if (options.targetEnv === CORE_CONSTANTS.VERCEL) {
+      const { VercelGenerator } = await import('../generators/core/vercel.generator.js')
+      generators.push(new VercelGenerator(this._fileService))
+    } else if (options.targetEnv === CORE_CONSTANTS.FASTIFY) {
+      const { FastifyGenerator } = await import('../generators/core/fastify.generator.js')
+      generators.push(new FastifyGenerator(this._fileService))
     }
-    // else if (options.targetEnv === CORE_CONSTANTS.VERCEL) {
-    //   const { VercelJsonGenerator } = await import('../generators');
-    //   generators.push(new VercelJsonGenerator());
-    // } else if (options.targetEnv === CORE_CONSTANTS.FASTIFY) {
-    //   const { FastifysonGenerator } = await import('../generators');
-    //   generators.push(new FastifysonGenerator());
-    // }
 
     return generators
   }

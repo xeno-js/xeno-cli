@@ -1,25 +1,20 @@
-## [0.1.8](https://github.com/xeno-js/xeno-cli/compare/v0.1.7...v0.1.8) (2026-10-01)
-
-### Bug Fixes
-
-- update bootstrap generator
-  ([0d6a54e](https://github.com/xeno-js/xeno-cli/commit/0d6a54e355bac3294a9b987069691f331857faca))
-
-## [0.1.7](https://github.com/xeno-js/xeno-cli/compare/v0.1.6...v0.1.7) (2026-09-30)
-
-### Bug Fixes
-
-- resolving bootstrap generators bug
-  ([cbf84fa](https://github.com/xeno-js/xeno-cli/commit/cbf84faef3a3e2e752652336e345ed9c2e283720))
-
-## [0.1.6](https://github.com/xeno-js/xeno-cli/compare/v0.1.5...v0.1.6) (2026-09-30)
+# [0.2.0](https://github.com/xeno-js/xeno-cli/compare/v0.1.4...v0.2.0) (2026-10-01)
 
 ### Bug Fixes
 
 - **file-service:** generating dir if not exists
   ([a738198](https://github.com/xeno-js/xeno-cli/commit/a738198cc2ce89005be40c526b764355c6d902f9))
+- resolving bootstrap generators bug
+  ([cbf84fa](https://github.com/xeno-js/xeno-cli/commit/cbf84faef3a3e2e752652336e345ed9c2e283720))
+- update bootstrap generator
+  ([0d6a54e](https://github.com/xeno-js/xeno-cli/commit/0d6a54e355bac3294a9b987069691f331857faca))
 
-## [0.1.5](https://github.com/xeno-js/xeno-cli/compare/2c1a8c92c767e5784d39361e93d2c71e5b0830fe...v0.1.5) (2026-09-30)
+### Features
+
+- adding vercel and fastify adapters
+  ([c954a28](https://github.com/xeno-js/xeno-cli/commit/c954a2886b78c17adebd8ff9050c74b0a6bcdc01))
+
+## [0.1.4](https://github.com/xeno-js/xeno-cli/compare/2c1a8c92c767e5784d39361e93d2c71e5b0830fe...v0.1.4) (2026-09-27)
 
 ### Bug Fixes
 
