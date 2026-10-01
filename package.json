@@ -1,6 +1,6 @@
 {
   "name": "@xeno-js/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Official Xeno.JS CLI for scaffolding and generating explicit TypeScript application architecture.",
   "repository": {
     "type": "git",
