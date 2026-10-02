@@ -408,19 +408,19 @@ Start with:
 
 Documentation:
 
-https://www.xeno-js.it/docs/introduction
+[GitHub](https://www.xeno-js.it/docs/introduction)
 
 Core:
 
-https://github.com/xeno-js/xeno-js
+[GitHub](https://github.com/xeno-js/xeno-js)
 
 Shared:
 
-https://github.com/xeno-js/xeno-shared
+[GitHub](https://github.com/xeno-js/xeno-shared)
 
 Vue:
 
-https://github.com/xeno-js/xeno-fe
+[GitHub](https://github.com/xeno-js/xeno-fe)
 
 ---
 
@@ -461,7 +461,7 @@ docs(readme): improve getting started
 If Xeno is useful to you, you can support the project through the community and
 sponsorship channels documented on the website:
 
-**[Support Xeno](https://www.xeno-js.it/docs/support-us)**
+**[Support Xeno](https://www.xeno-js.it/support-us)**
 
 ---
 
