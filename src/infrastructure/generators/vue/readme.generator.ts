@@ -77,7 +77,7 @@ Vue UI
     Infrastructure
     ↓
     HTTP / external systems
-      \`\`\`
+\`\`\`
 
 Vue remains your presentation layer.
 
@@ -103,7 +103,7 @@ runtime scanning, or hidden framework conventions.
     import { XenoAppBuilder } from '@xeno-js/vue'
 
     const builder = XenoAppBuilder.create()
-      \`\`\`
+\`\`\`
 
 You configure the services your application needs through the builder.
 
@@ -125,19 +125,19 @@ Application action
 Query pipeline
    ↓
 Application action
-      \`\`\`
+\`\`\`
 
 Commands are sent with:
 
 \`\`\`ts
     await services.mediator.send(command, action)
-      \`\`\`
+\`\`\`
 
 Queries are executed with:
 
 \`\`\`ts
     await services.mediator.query(query, action)
-      \`\`\`
+\`\`\`
 
 The application action is supplied by your code, so the transport remains behind
 an infrastructure boundary.
@@ -166,7 +166,7 @@ For example:
       config.queryCaching = true
       config.threshold = 500
     })
-      \`\`\`
+\`\`\`
 
 Query caching uses the configured cache and is intended for query requests.
 
@@ -188,7 +188,7 @@ HTTP concerns can be isolated behind a remote data source.
         return this.post<User, CreateUserPayload>('/users', payload)
       }
     }
-    \`\`\`
+\`\`\`
 
 The data source depends on the framework-neutral HTTP client abstraction.
 
@@ -205,7 +205,7 @@ the resulting data source in the application registry.
         config.client.baseURL = '/api'
         config.factory = (http) => new UsersRemoteDataSource(http)
       })
-      \`\`\`
+\`\`\`
 
 Axios is used by the built-in HTTP adapter when \`addHttpCore()\` is configured.
 
@@ -232,7 +232,7 @@ You can use the default accessor or provide your own implementation.
     builder.addContext((config) => {
       // Optional custom context accessor configuration.
     })
-      \`\`\`
+\`\`\`
 
 ---
 
@@ -252,7 +252,7 @@ Example:
     builder.addLogger((config) => {
       config.console = true
     })
-      \`\`\`
+\`\`\`
 
 Optional integrations are loaded when they are configured, keeping them outside
 the default bootstrap path.
@@ -268,7 +268,7 @@ Supabase authentication is available as an infrastructure integration.
       config.url = env.getOrThrow('SUPABASE_URL')
       config.key = env.getOrThrow('SUPABASE_KEY')
     })
-      \`\`\`
+\`\`\`
 
 The default configuration service resolves \`VITE_\` environment variables in
 Vite applications.
@@ -278,7 +278,7 @@ For example:
 \`\`\`text
     VITE_SUPABASE_URL
     VITE_SUPABASE_KEY
-      \`\`\`
+\`\`\`
 
 Authentication is an integration, not part of the application's business rules.
 
@@ -295,7 +295,7 @@ Application request validation can be configured with Zod schemas.
         UpdateUser: updateUserSchema,
       }
     })
-      \`\`\`
+\`\`\`
 
 Validation is executed as part of the application pipeline.
 
@@ -313,7 +313,7 @@ Enable it through the pipeline configuration:
     builder.addPipeline((config) => {
       config.queryCaching = true
     })
-      \`\`\`
+\`\`\`
 
 Cache keys can be contextual or user-scoped through the shared cache key builder.
 
@@ -343,7 +343,7 @@ A complete browser composition root can look like this:
     export async function bootstrap() {
       return builder.build()
     }
-    \`\`\`
+\`\`\`
 
 The builder executes the registered tasks and returns a frozen application
 registry.
@@ -374,7 +374,7 @@ available through Vue's \`provide / inject\` mechanism.
     }
 
     mountApp()
-      \`\`\`
+\`\`\`
 
 From there, your application code can resolve the registry through Vue's normal
 dependency injection mechanism.
@@ -403,7 +403,7 @@ For example:
 
       return services
     }
-    \`\`\`
+\`\`\`
 
 The composable belongs to your application.
 
@@ -419,7 +419,7 @@ The package root currently exposes:
     XenoAppBuilder
     RemoteDataSource
     XENO_SERVICES_KEY
-      \`\`\`
+\`\`\`
 
 It also re-exports the public contracts and primitives from \`@xeno-js / shared\`.
 
@@ -434,7 +434,7 @@ Install Vue, Shared, and Xeno Vue:
 
 \`\`\`bash
 npm install @xeno-js / vue @xeno-js / shared vue
-      \`\`\`
+\`\`\`
 
 Install the integrations you actually use.
 
@@ -442,31 +442,31 @@ For HTTP data sources:
 
 \`\`\`bash
 npm install axios
-      \`\`\`
+\`\`\`
 
 For validation:
 
 \`\`\`bash
 npm install zod
-      \`\`\`
+\`\`\`
 
 For Supabase authentication:
 
 \`\`\`bash
 npm install @supabase/supabase-js
-      \`\`\`
+\`\`\`
 
 For Sentry:
 
 \`\`\`bash
 npm install @sentry/vue
-      \`\`\`
+\`\`\`
 
 For Vue Router integration:
 
 \`\`\`bash
 npm install vue - router
-      \`\`\`
+\`\`\`
 
 ---
 
@@ -477,13 +477,13 @@ structures:
 
 \`\`\`bash
 npx @xeno-js / cli new my - app--vue
-      \`\`\`
+\`\`\`
 
 You can also generate application components inside an existing project:
 
 \`\`\`bash
 npx @xeno-js / cli g command CreateUser--vue
-      \`\`\`
+\`\`\`
 
 CLI:
 
@@ -521,7 +521,7 @@ A useful mental model is:
 
     Infrastructure
     connects external systems
-      \`\`\`
+\`\`\`
 
 ---
 
@@ -557,13 +557,13 @@ Clone the repository:
 git clone https://github.com/xeno-js/xeno-fe.git
 cd xeno - fe
 npm install
-      \`\`\`
+\`\`\`
 
 Run the checks:
 
 \`\`\`bash
 npm run check
-      \`\`\`
+\`\`\`
 
 Useful commands:
 
@@ -574,7 +574,7 @@ npm run lint
 npm run test
 npm run test: coverage
 npm run format
-      \`\`\`
+\`\`\`
 
 Development happens from feature branches targeting \`develop\`.
 
@@ -590,13 +590,13 @@ Create a feature branch from \`develop\`:
 git checkout develop
 git pull origin develop
 git checkout - b feat / your - feature
-      \`\`\`
+\`\`\`
 
 Run the project checks before opening a pull request:
 
 \`\`\`bash
 npm run check
-      \`\`\`
+\`\`\`
 
 We use Conventional Commits:
 
@@ -605,13 +605,13 @@ We use Conventional Commits:
     fix(datasource): correct request handling
     refactor(builder): simplify bootstrap
     docs(readme): clarify architecture
-      \`\`\`
+\`\`\`
 
 Open pull requests against:
 
 \`\`\`text
     develop
-      \`\`\`
+\`\`\`
 
 ---
 

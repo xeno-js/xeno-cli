@@ -35,16 +35,16 @@ export class BootstrapGenerator implements IGenerator<CoreOptions> {
     if (options.database !== CORE_CONSTANTS.NONE) {
       if (options.database === CORE_CONSTANTS.DRIZZLE) {
         builderNodes += `
-        .addDb((opts, config) => {
-          opts.enableSqlLite = false
-          opts.connectionString = config.getOrThrow('DATABASE_URL');
-        })`
+    .addDb((opts, config) => {
+      opts.enableSqlLite = false
+      opts.connectionString = config.getOrThrow('DATABASE_URL');
+    })`
       } else if (options.database === CORE_CONSTANTS.SQL_LITE) {
         builderNodes += `
-        .addDb((opts, config) => {
-          opts.enableSqlLite = true;
-          opts.connectionString = config.getOrThrow('SQLITE_DATABASE_URL');
-        })`
+    .addDb((opts, config) => {
+      opts.enableSqlLite = true;
+      opts.connectionString = config.getOrThrow('SQLITE_DATABASE_URL');
+    })`
       }
     }
 

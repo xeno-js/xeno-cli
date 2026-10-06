@@ -66,7 +66,7 @@ at the composition root.
         container.resolve('USER_MAPPER'),
       )
     })
-      \`\`\`
+\`\`\`
 
 This makes the composition of the application easier to inspect, test, and
 reason about.
@@ -95,7 +95,7 @@ Hono, Express, or other adapters.
       v
     Infrastructure
     DB / Redis / APIs
-      \`\`\`
+\`\`\`
 
 ### 03 — CQRS as an Application Primitive
 
@@ -162,7 +162,7 @@ A typical Xeno application can be organized like this:
 | Infrastructure |
 | DB / Redis / APIs / Auth / Logs |
                     +------------------------------------------+
-                      \`\`\`
+\`\`\`
 
 Xeno's core is focused on composition and application architecture.
 Infrastructure capabilities can be enabled only when they are needed.
@@ -189,7 +189,7 @@ Infrastructure capabilities can be enabled only when they are needed.
 
 \`\`\`bash
 npm install @xeno-js / core
-      \`\`\`
+\`\`\`
 
 Install only the integrations your application uses. Xeno exposes optional
 infrastructure dependencies for capabilities such as databases, Redis, logging,
@@ -199,7 +199,7 @@ For example:
 
 \`\`\`bash
 npm install zod pino cockatiel drizzle - orm
-      \`\`\`
+\`\`\`
 
 ---
 
@@ -230,7 +230,7 @@ The composition root is explicit:
       })
 
     await app.build()
-      \`\`\`
+\`\`\`
 
 The transport remains outside the application composition:
 
@@ -268,7 +268,7 @@ The transport remains outside the application composition:
 
       return reply.send(result)
     })
-      \`\`\`
+\`\`\`
 
 The HTTP adapter is responsible for HTTP. The application handler is responsible
 for the use case.
@@ -303,7 +303,7 @@ Cross-cutting behavior can be composed around commands and queries:
 
         config.queryBus.isEnabled = true
       })
-      \`\`\`
+\`\`\`
 
 The exact pipeline configuration depends on the integrations enabled by your
 application.
@@ -334,7 +334,7 @@ Use the official CLI to scaffold a Xeno application:
 \`\`\`bash
 npm install @xeno-js / cli
     xeno - js new my - xeno - app--core
-      \`\`\`
+\`\`\`
 
 See the [CLI documentation](https://www.xeno-js.it/cli/overview).
 
@@ -424,7 +424,7 @@ git checkout - b feat / your - feature
 
 npm install
 npm run check
-      \`\`\`
+\`\`\`
 
 We use Conventional Commits:
 
@@ -432,13 +432,13 @@ We use Conventional Commits:
     feat(scope): add new feature
     fix(scope): resolve bug
     chore(scope): update dependencies
-      \`\`\`
+\`\`\`
 
 Before opening a pull request, run:
 
 \`\`\`bash
 npm run check
-      \`\`\`
+\`\`\`
 
 | Command                 | Description              |
 | ----------------------- | ------------------------ |

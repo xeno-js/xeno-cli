@@ -49,8 +49,10 @@ export class PackageJsonCoreGenerator implements IGenerator<CoreOptions> {
     if (options.cockatiel) packageJson.dependencies['cockatiel'] = '^4.0.0'
     if (options.targetEnv === TARGET_ENV_CONSTANTS.FASTIFY)
       packageJson.dependencies['fastify'] = '^5.12.5'
-    if (options.targetEnv === TARGET_ENV_CONSTANTS.VERCEL)
+    if (options.targetEnv === TARGET_ENV_CONSTANTS.VERCEL) {
       packageJson.dependencies['@vercel/node'] = '^16.0.2'
+      packageJson.dependencies['vercel'] = 'latest'
+    }
 
     // Logging & Observability
     if (options.pino) {
