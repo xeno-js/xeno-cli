@@ -9,13 +9,28 @@ export class VercelGenerator implements IGenerator<CoreOptions> {
   public async generate(projectPath: string, _options: CoreOptions): Promise<void> {
     const vercelJson = {
       version: 2,
-      builds: [
+      functions: {
+        'api/**/*.ts': {
+          maxDuration: 30,
+          includeFiles: 'src/**/*',
+        },
+      },
+      routes: [
         {
-          src: 'api/**/*.ts',
-          use: '@vercel/node',
+          handle: 'filesystem',
+        },
+        {
+          src: '/api/(.*)',
+          dest: '/api/$1.ts',
+        },
+        {
+          src: '/(.*)',
+          dest: '/404.html',
+          status: 404,
         },
       ],
     }
+
     await this._fileService.writeFileRecursive(
       path.join(projectPath, 'vercel.json'),
       JSON.stringify(vercelJson, null, 2),
@@ -48,11 +63,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         * }
         */
         
-        logger.info('Vercel function executed successfully at /api/hello-worlds');
+        logger.info('Vercel function executed successfully at /api/hello-world');
 
         return res.status(200).json({ 
             success: true, 
-            message: 'Hello from Xeno Vercel Serverless Function!' 
+            message: 'Hello World! From Xeno Vercel Serverless Function!' 
         });
     } catch (error) {
         console.error('Error during Vercel execution:', error);
@@ -61,8 +76,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 }
 `
     await this._fileService.writeFileRecursive(
-      path.join(projectPath, 'api', 'hello-worlds.ts'),
+      path.join(projectPath, 'api', 'hello-world.ts'),
       apiContent,
+    )
+    const notFound = `<!doctype html>
+  <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Page not found  404</title>
+    <style>
+      body{font-family:Inter,system-ui,Arial,Helvetica,sans-serif;background:#f6f8fa;color:#0f172a;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+      .card{max-width:720px;padding:36px;border-radius:12px;background:#ffffff;box-shadow:0 6px 24px rgba(15,23,42,.08)}
+      h1{margin:0 0 8px;font-size:28px}
+      p{margin:0 0 16px;color:#475569}
+      a{color:#0ea5e9;text-decoration:none;font-weight:600}
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>404  Page Not Found</h1>
+      <p>The request page was not found. Check the URL or return to the <a href="/">homepage</a>.</p>
+    </div>
+  </body>
+  </html>`
+
+    await this._fileService.writeFileRecursive(
+      path.join(projectPath, 'public', '404.html'),
+      notFound,
     )
   }
 }
