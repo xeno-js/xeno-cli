@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/xeno-js/xeno-cli/compare/v0.2.2...v0.3.0) (2026-10-07)
+
+### Features
+
+- adding version command
+  ([792d40a](https://github.com/xeno-js/xeno-cli/commit/792d40a52b229024bcaaadae7c45a5d1f6ef3d95))
+
 ## [0.2.2](https://github.com/xeno-js/xeno-cli/compare/v0.2.0...v0.2.2) (2026-10-06)
 
 ### Bug Fixes
