@@ -1,5 +1,6 @@
 import pc from 'picocolors'
 
+import pkg from '../../../package.json'
 import type { ICliCommand, IDispatcher } from '../../domain'
 import { ARGS_CONSTANTS, COMMAND_CONSTANTS, Guards } from '../../shared'
 
@@ -17,6 +18,11 @@ export class CliDispatcher implements IDispatcher {
 
   public async dispatch(rawArgs: string[]): Promise<void> {
     const action = rawArgs[0]
+
+    if (action === '-v' || action === '--v' || action === '-version' || action === '--version') {
+      console.info(pc.cyan('xeno-js version: ') + pc.green(pkg.version))
+      return
+    }
 
     if (
       !Guards.isDefined(action) ||

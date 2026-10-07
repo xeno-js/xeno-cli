@@ -17,7 +17,7 @@ export class GenerateQueryCoreGenerator {
     const domainDir = path.join(componentDir, 'domain')
     const presDir = path.join(componentDir, 'presentation')
 
-    const queryContent = `import { BaseQuery } from '@xeno-js/core';
+    const queryContent = `import { Query } from '@xeno-js/core';
 export interface ${pascalName}Payload {
     // TODO: Define your command payload properties here
 }
@@ -26,7 +26,7 @@ export interface ${pascalName}Payload {
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
  * Please replace <void> with your specific payload and response types.
  */
-export class ${pascalName}Query extends BaseQuery<void> {
+export class ${pascalName}Query extends Query<void> {
     constructor(public readonly payload: ${pascalName}Payload) {
         super(
             '${tokenPrefix}_QUERY_HANDLER', 

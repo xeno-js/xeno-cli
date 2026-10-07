@@ -12,16 +12,20 @@ export class RegistryGenerator implements IGenerator<CoreOptions> {
     if (options.database !== CORE_CONSTANTS.NONE) {
       if (options.database === CORE_CONSTANTS.DRIZZLE) {
         dbImport = `import type { DbSchema } from './schema';`
-        registryType = `XenoRegistry<DbSchema>`
+        registryType = `XenoDbRegistry<DbSchema>`
       } else if (options.database === CORE_CONSTANTS.SQL_LITE) {
         dbImport = `import type { SqliteSchema } from './schema';`
-        registryType = `XenoRegistry<SqliteSchema>`
+        registryType = `XenoDbRegistry<SqliteSchema>`
       }
     } else {
       registryType = `XenoRegistry`
     }
 
-    const content = `import type { XenoRegistry } from '@xeno-js/core';
+    const registryImport =
+      options.database !== CORE_CONSTANTS.NONE ? 'XenoDbRegistry' : 'XenoRegistry'
+    const pkgImport =
+      options.database !== CORE_CONSTANTS.NONE ? '@xeno-js/core/db' : '@xeno-js/core'
+    const content = `import type { ${registryImport} } from '${pkgImport}';
 ${dbImport}
 
 /**
