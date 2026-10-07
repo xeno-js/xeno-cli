@@ -1,5 +1,6 @@
 export const ARGS_CONSTANTS = Object.freeze({
   HELP: '--help',
+  VERSION: '--version',
   VUE: '--vue',
   CORE: '--core',
   CONSOLE: '--console',

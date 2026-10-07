@@ -56,6 +56,11 @@ export class HelpCommand implements ICliCommand {
     console.info(`  xeno-js --help     ${pc.gray('Displays this guide.')}`)
     console.info(`  ${pc.gray('Alias:')} ${pc.gray('xeno-js --h | -h')}\n`)
 
+    // --- VERSION ---
+    console.info(pc.bold(pc.blue('4. Version:')))
+    console.info(`  xeno-js --version   ${pc.gray('Displays the installed CLI version.')}`)
+    console.info(`  ${pc.gray('Alias:')} ${pc.gray('xeno-js --v | -v | -version')}\n`)
+
     // --- DOCS ---
     console.info(pc.bold(pc.blue('Documentation:')))
     console.info(`  ${pc.underline('https://www.xeno-js.it')}\n`)
