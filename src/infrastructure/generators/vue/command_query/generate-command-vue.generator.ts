@@ -29,10 +29,10 @@ export class ${pascalName}Command extends Command {
       commandContent,
     )
 
-    const handlerContent = `import type { ResultType } from '@xeno-js/vue';
+    const handlerContent = `import type { IFactory, ResultType, UserContext } from '@xeno-js/vue';
 import { AppError, BaseHandler, Result } from '@xeno-js/vue';
 import type { ${pascalName}Command } from './${lowerName}.command';
-import type { ${pascalName}Response } from '../entity/${lowerName}.model';
+import type { ${pascalName}Response } from '../domain/${lowerName}.model';
 
 /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
@@ -50,7 +50,10 @@ import type { ${pascalName}Response } from '../entity/${lowerName}.model';
 export class ${pascalName}Handler extends BaseHandler<${pascalName}Command, ${pascalName}Response> {
     constructor(
         // TODO: Inject your remote DataSources or other services here
-    ) {}
+        identityFactory: IFactory<void, UserContext>
+    ) {
+        super(identityFactory);
+    }
 
     protected async executeAsync(command: ${pascalName}Command, signal: AbortSignal): Promise<ResultType<${pascalName}Response>> {
         // TODO: Implement your frontend business logic or API calls here
@@ -63,7 +66,7 @@ export class ${pascalName}Handler extends BaseHandler<${pascalName}Command, ${pa
       handlerContent,
     )
 
-    const composableContent = `import { ref } from 'vue';
+    const composableContent = `import { onUnmounted, ref } from 'vue';
 import { AppError, Result, type ApiResponseDto, type ResultType } from '@xeno-js/vue';
 import { ServicesUtils } from '@/use-app';
 import { ${pascalName}Command } from '../application/${lowerName}.command';

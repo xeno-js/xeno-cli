@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import pc from 'picocolors'
 
-import { Builder } from './infrastructure/builder'
+import { Builder } from './infrastructure'
 
 /**
  * @function init

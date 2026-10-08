@@ -74,7 +74,7 @@ import { ${pascalName}Command, ${pascalName}Payload } from '../application/${low
 
 /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
- * Please replace <{pascalName}Payload, void> with your specific request and response types.
+ * Please replace <${pascalName}Payload, void> with your specific request and response types.
  */
 export class ${pascalName}Controller extends BaseController<${pascalName}Payload, void> {
     constructor(
@@ -84,9 +84,9 @@ export class ${pascalName}Controller extends BaseController<${pascalName}Payload
         super(requestContext, mediator);
     }
 
-    public async handle(request: {pascalName}Payload): Promise<ResponseDto<void>> {
+    public async handle(request: ${pascalName}Payload, signal: AbortSignal): Promise<ResponseDto<void>> {
         const cmd = new ${pascalName}Command(request);
-        const result = await this._send(cmd);
+        const result = await this._send(cmd, signal);
 
         if (!result.isOk()) {
             return this.fail(result.getErrorOrThrow(), 'Error during ${pascalName} operation');
@@ -130,13 +130,13 @@ export class ${pascalName} extends Entity<${pascalName}Props> {
     // 5. Schema Zod (Condizionale)
     if (hasZod) {
       const zodContent = `import { z } from 'zod';
-import { ZodUtils } from '@xeno-js/core';
+import { ZodUtils } from '@xeno-js/shared/zod';
 
 /**
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
  * Define the actual Zod validation schema for your command payload.
  */
-export const ${pascalName}Schema = ZodUtils.createCommandSchema({
+export const ${pascalName}Schema = ZodUtils.createCommandSchema('${tokenPrefix}_COMMAND_HANDLER', {
     payload: z.object({
         // TODO: Define strict validation rules here, e.g.:
         // email: z.string().email(),
@@ -182,16 +182,18 @@ import { ${pascalName}Handler } from './application/${lowerName}.handler';
 
 export const ${pascalName}Module = Object.freeze({
     register(opts: IServiceContainer<any>, _config: IConfigurationService): void {
-        opts.addTransient('${tokenPrefix}_COMMAND_CONTROLLER', (c) => new ${pascalName}Controller(c.resolve(TOKENS.REQUEST_CONTEXT), c.resolve(TOKENS.MEDIATOR)));
-        opts.addScoped('${tokenPrefix}_COMMAND_HANDLER', (c) => new ${pascalName}Handler(c.resolve(TOKENS.USER_CONTEXT_FACTORY)));
-
+        
         /*
          * ⚠️ WARNING: ACTION REQUIRED ⚠️
          * Please copy and paste the following tokens to your MyRegistry interface (usually in src/registry.ts):
          *
-         * ${tokenPrefix}_COMMAND_CONTROLLER: IController<any, any>;
-         * ${tokenPrefix}_COMMAND_HANDLER: IHandler<${pascalName}Command, any>;
+         * ${tokenPrefix}_COMMAND_CONTROLLER: IController<${pascalName}Command, void>;
+         * ${tokenPrefix}_COMMAND_HANDLER: IHandler<${pascalName}Command, void>;
+         * 
+         * Remember to replace void with the actual return type of your command/controller handler
          */
+        opts.addTransient('${tokenPrefix}_COMMAND_CONTROLLER', (c) => new ${pascalName}Controller(c.resolve(TOKENS.REQUEST_CONTEXT), c.resolve(TOKENS.MEDIATOR)));
+        opts.addScoped('${tokenPrefix}_COMMAND_HANDLER', (c) => new ${pascalName}Handler(c.resolve('USER_CONTEXT_FACTORY')));
     }
 } as const);
 `

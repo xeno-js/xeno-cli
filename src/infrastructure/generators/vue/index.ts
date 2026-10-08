@@ -1,5 +1,4 @@
 export * from './app-vue.generator'
-export * from './bootstrap-ts.generator'
 export * from './env.generator'
 export * from './index-html.generator'
 export * from './main.generator'
