@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/xeno-js/xeno-cli/compare/v0.3.0...v0.3.1) (2026-10-08)
+
+### Bug Fixes
+
+- **core:** update command query generation for core
+  ([b478f03](https://github.com/xeno-js/xeno-cli/commit/b478f03e910d649f79ddc396f11c9424e683ddb3))
+- resolved bug for command-query generate
+  ([570ec58](https://github.com/xeno-js/xeno-cli/commit/570ec58c39eb5a0ff7881eafaec064daef77c641))
+
 # [0.3.0](https://github.com/xeno-js/xeno-cli/compare/v0.2.2...v0.3.0) (2026-10-07)
 
 ### Features
