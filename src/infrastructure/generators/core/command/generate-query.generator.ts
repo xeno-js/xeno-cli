@@ -35,7 +35,7 @@ export class ${pascalName}Query extends Query<void> {
                 ttl: 60,
                 cacheKey: \`${lowerName}:\${JSON.stringify(payload)}\`,
                 bypassCache: false,
-                consistentRead: false
+                consistentRead: false,
                 isUserScoped: false,
             }
         );
@@ -79,7 +79,7 @@ export class ${pascalName}Handler extends BaseHandler<${pascalName}Query, void> 
     // 3. Controller
     const controllerContent = `import type { IContextAccessor, IMediator, RequestContext, ResponseDto } from '@xeno-js/core';
 import { BaseController } from '@xeno-js/core';
-import { ${pascalName}Query, ${pascalName}Payload } from '../presentation/${lowerName}.query';
+import { ${pascalName}Query, ${pascalName}Payload } from '../application/${lowerName}.query';
 
 /*
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
@@ -93,9 +93,9 @@ export class ${pascalName}Controller extends BaseController<${pascalName}Payload
         super(requestContext, mediator);
     }
 
-    public async handle(request: ${pascalName}Payload): Promise<ResponseDto<void>> {
+    public async handle(request: ${pascalName}Payload, signal: AbortSignal): Promise<ResponseDto<void>> {
         const query = new ${pascalName}Query(request);
-        const result = await this._query(query);
+        const result = await this._query(query, signal);
 
         if (!result.isOk()) {
             return this.fail(result.getErrorOrThrow(), 'Error during ${pascalName} operation');
@@ -138,13 +138,13 @@ export class ${pascalName}Controller extends BaseController<${pascalName}Payload
     // 4. Schema Zod
     if (hasZod) {
       const zodContent = `import { z } from 'zod';
-import { ZodUtils } from '@xeno-js/core';
+import { ZodUtils } from '@xeno-js/shared/zod';
 
 /**
  * ⚠️ WARNING: ACTION REQUIRED ⚠️
  * Define the actual Zod validation schema for your command payload.
  */
-export const ${pascalName}Schema = ZodUtils.createCommandSchema({
+export const ${pascalName}Schema = ZodUtils.createCommandSchema('${tokenPrefix}_QUERY_HANDLER', {
     payload: z.object({
         // TODO: Define strict validation rules here, e.g.:
         // email: z.string().email(),
@@ -161,21 +161,22 @@ export const ${pascalName}Schema = ZodUtils.createCommandSchema({
     // 5. Module
     const moduleContent = `import type { IServiceContainer, IConfigurationService } from '@xeno-js/core';
 import { TOKENS } from '@xeno-js/core';
-import { ${pascalName}Controller } from './${lowerName}.controller';
-import { ${pascalName}Handler } from './${lowerName}.handler';
+import { ${pascalName}Controller } from './presentation/${lowerName}.controller';
+import { ${pascalName}Handler } from './application/${lowerName}.handler';
 
 export const ${pascalName}Module = Object.freeze({
     register(opts: IServiceContainer<any>, _config: IConfigurationService): void {
-        opts.addTransient('${tokenPrefix}_QUERY_CONTROLLER', (c) => new ${pascalName}Controller(c.resolve(TOKENS.REQUEST_CONTEXT), c.resolve(TOKENS.MEDIATOR)));
-        opts.addScoped('${tokenPrefix}_QUERY_HANDLER', (c) => new ${pascalName}Handler(c.resolve(TOKENS.USER_CONTEXT_FACTORY)));
-
         /*
          * ⚠️ WARNING: ACTION REQUIRED ⚠️
          * Please copy and paste the following tokens to your MyRegistry interface (usually in src/registry.ts):
          *
          * ${tokenPrefix}_QUERY_CONTROLLER: IController<${pascalName}Query, void>;
          * ${tokenPrefix}_QUERY_HANDLER: IHandler<${pascalName}Query, void>;
+         * 
+         * Remember to replace void with the actual return type of your command/controller handler
          */
+        opts.addTransient('${tokenPrefix}_QUERY_CONTROLLER', (c) => new ${pascalName}Controller(c.resolve(TOKENS.REQUEST_CONTEXT), c.resolve(TOKENS.MEDIATOR)));
+        opts.addScoped('${tokenPrefix}_QUERY_HANDLER', (c) => new ${pascalName}Handler(c.resolve('USER_CONTEXT_FACTORY')));
     }
 } as const);
 `
