@@ -17,7 +17,7 @@ export class GenerateQueryVueGenerator {
 
     // 1. Query (Application)
     const queryContent = `import { Query } from '@xeno-js/vue';
-import type { ${pascalName}Response } from './${lowerName}.model';
+import type { ${pascalName}Response } from '../domain/${lowerName}.model';
 
 export class ${pascalName}Query extends Query<${pascalName}Response> {
     constructor() {
@@ -36,7 +36,7 @@ export class ${pascalName}Query extends Query<${pascalName}Response> {
       queryContent,
     )
 
-    const handlerContent = `import type { ResultType } from '@xeno-js/vue';
+    const handlerContent = `import type { IFactory, ResultType, UserContext } from '@xeno-js/vue';
 import { AppError, BaseHandler, Result } from '@xeno-js/vue';
 import type { ${pascalName}Query } from './${lowerName}.query';
 import type { ${pascalName}Response } from '../domain/${lowerName}.model';
@@ -57,7 +57,10 @@ import type { ${pascalName}Response } from '../domain/${lowerName}.model';
 export class ${pascalName}Handler extends BaseHandler<${pascalName}Query, ${pascalName}Response> {
     constructor(
         // TODO: Inject your remote DataSources or other services here
-    ) {}
+        identityFactory: IFactory<void, UserContext>
+    ) {
+        super(identityFactory);
+    }
 
     protected async executeAsync(query: ${pascalName}Query, signal: AbortSignal): Promise<ResultType<${pascalName}Response>> {
         // TODO: Implement your frontend business logic or API calls here
@@ -71,7 +74,7 @@ export class ${pascalName}Handler extends BaseHandler<${pascalName}Query, ${pasc
     )
 
     // 2. Composable (Presentation)
-    const composableContent = `import { ref } from 'vue';
+    const composableContent = `import { onUnmounted, ref } from 'vue';
 import { AppError, Result, type ApiResponseDto, type ResultType } from '@xeno-js/vue';
 import { ServicesUtils } from '@/use-app';
 import { ${pascalName}Query } from '../application/${lowerName}.query';
@@ -110,8 +113,8 @@ const fetch = async (): Promise<ResultType<${pascalName}Response>> => {
         error.value = null;
 
         try {
-            try {
             // Resolve mediator and handler from the container
+            // Please register you handler ${tokenPrefix}_HANDLER in registry.ts
             const { mediator, ${tokenPrefix}_HANDLER: handler } = ServicesUtils.useApp();
             const query = new ${pascalName}Query();
 
